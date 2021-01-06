@@ -1,0 +1,58 @@
+<article class="event-promo vevent{if embed:visiting_speaker_photo} imaged{/if}{if embed:eventbrite_link} future{/if}">
+	<h1 class="promo-title"><span>
+	
+	{if embed:event_page != "yes" AND embed:visiting_speaker != embed:local_speaker}
+		<a href="{embed:url}">
+	{/if}
+	
+	{!-- only future events get the month & day --}
+	{if embed:eventbrite_link}	
+		<b class="date">Coming <time class="dtstart" datetime="{embed:datetime}">{embed:display_date}</time></b>
+	{if:else}
+		<b class="date"><time class="dtstart" datetime="{embed:datetime}">{embed:display_date} {embed:display_year}</time></b>
+	{/if}
+	
+	{exp:typogrify widont="n" caps="n"}
+		{if embed:visiting_speaker == embed:local_speaker}
+			<b class="title">{embed:title}</b>
+		{if:else}
+			<b class="speaker visiting">{embed:visiting_speaker}</b>
+			{if embed:local_speaker != "TBA"}
+			&amp; <b class="speaker local">{embed:local_speaker}</b>
+			{/if}
+		{/if}
+	{/exp:typogrify}
+	
+	{if embed:event_page != "yes" AND embed:visiting_speaker != embed:local_speaker}
+		</a>
+	{/if}
+
+
+	</span></h1>
+
+	{!-- Lazy loading the photos --}
+	{if embed:visiting_speaker_photo}
+		<div class="speaker visiting" data-image="{cdn_domain}/speakers/_large/{embed:visiting_speaker_photo}.jpg" data-image-attr="width:370;height:370;"></div>
+		{if embed:local_speaker_photo}
+			<div class="speaker local" data-image="{cdn_domain}/speakers/_small/{embed:local_speaker_photo}.jpg" data-image-attr="width:170;height:170;"></div>
+		{/if}
+	{/if}
+
+	<div class="summary">
+	{exp:typogrify}
+		{embed:description}
+	{/exp:typogrify}
+
+	{!-- Link should not be on the event page --}
+	{if embed:event_page != "yes" AND embed:visiting_speaker != embed:local_speaker}
+		{if "{exp:phpstringfun function='substr_count' par1='TBD'}{embed:main_talk_title}{/exp:phpstringfun}" != "1"}
+			<p>{if embed:eventbrite_link}Need More convincing? {/if}<a href="{embed:url}">Read the full event description &amp; more…</a></p>
+		{/if}
+	{/if}
+	
+	{!-- only future events get the link --}
+	{if embed:eventbrite_link}
+		<p class="get-tickets"><a href="{embed:eventbrite_link}">Reserve Your Seat</a></p>
+	{/if}
+	</div>
+</article>

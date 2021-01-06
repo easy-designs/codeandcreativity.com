@@ -1,0 +1,23 @@
+<div id="watch-past-presentation">
+	<p>Meanwhile, enjoy one of these past presentations</p>
+	<ul>
+	{exp:channel:entries
+		channel="talks"
+		dynamic="no"
+		show_expired="no"
+		require_entry="yes"
+		limit="6"
+		cache="yes"
+		refresh="10080"
+		}
+		{if talk_video_embed}
+			{exp:antenna url='{talk_video_embed}' cache_minutes="120" wmode="transparent|opaque|window"}
+				<li>
+					<a href="/events/{talk_event:url_title}#{if local_or_visiting_speaker == 'Visiting'}visiting{if:else}local{/if}-speaker-video"><img src="{video_thumbnail}" class="video-thumbnail" /></a>
+					<h3><a href="/events/{talk_event:url_title}#{if local_or_visiting_speaker == 'Visiting'}visiting{if:else}local{/if}-speaker-video">{video_title}</a></h3>
+				</li>
+			{/exp:antenna}
+		{/if}
+	{/exp:channel:entries}
+	</ul>
+</div>

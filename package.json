@@ -1,0 +1,23 @@
+{
+	"name": "CodeAndCreativityGrunt",
+	"version": "0.1.0",
+	"author": "Easy Designs (easy-designs.net)",
+	"private": true,
+	"devDependencies": {
+		"grunt": "~0.4.2",
+		"grunt-contrib-clean": "*",
+		"grunt-contrib-compass": "*",
+		"grunt-contrib-compress": "*",
+		"grunt-contrib-concat": "*",
+		"grunt-contrib-copy": "*",
+		"grunt-contrib-cssmin": "*",
+		"grunt-contrib-uglify": "*",
+		"grunt-contrib-watch": "*",
+		"grunt-cssc": "*",
+		"grunt-grunticon": "~1.0.0",
+		"grunt-imageoptim": "~1.4.1",
+		"grunt-replace": "*",
+		"grunt-svgmin": "~0.1.0",
+		"matchdep": "*"
+	}
+}

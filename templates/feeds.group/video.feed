@@ -1,0 +1,67 @@
+{exp:rss:feed 
+	channel="talks"
+	show_future_entries="no"
+	parse="inward"
+	}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:media="http://search.yahoo.com/mrss/"
+	>
+	<channel>
+		<title>{exp:xml_encode}Code &amp; Creativity{/exp:xml_encode}</title>
+		<atom:link href="feed://{site_domain}/feed/video" rel="self" type="application/rss+xml"/>
+		<link>{site_url}</link>
+		<dc:language>en-us</dc:language>
+	{exp:channel:entries
+		channel="microcopy"
+		dynamic="no"
+		url_title="copyright"
+		disable="categories|category_fields|member_data|pagination"
+		}
+		<dc:rights>{exp:xml_encode}{content_body}{/exp:xml_encode}</dc:rights>
+	{/exp:channel:entries}
+	{exp:channel:entries 
+		channel="microcopy"
+		dynamic="no"
+		url_title="about-the-series"
+		disable="categories|category_fields|member_data|pagination"
+		}
+		<description>{exp:xml_encode}{exp:tagstripper:stripAllTags}{content_body}{/exp:tagstripper:stripAllTags}{/exp:xml_encode}</description>
+	{/exp:channel:entries}
+		<dc:creator>{exp:xml_encode}Code &amp; Creativity{/exp:xml_encode}</dc:creator>
+		<dc:date>{gmt_date format="%Y-%m-%d"}</dc:date>	
+
+{exp:channel:entries
+	channel="talks"
+	dynamic="no"
+	show_expired="yes"
+	show_future_entries="no"
+	orderby="{entry_date}"
+	sort="desc"
+	rdf="off"
+	cache="yes"
+	refresh="30"
+	parse="inward"
+	disable="categories|category_fields|member_data|pagination"
+	}
+	{if talk_video_embed}
+		<item>
+			<title>{exp:xml_encode}{title}{/exp:xml_encode}</title>
+			<author>{talk_speaker}</author>
+			<description><![CDATA[
+				{exp:xml_encode}{talk_video_embed}{/exp:xml_encode}
+			]]></description>
+		</item>
+	{/if}
+{/exp:channel:entries}
+
+	</channel>
+</rss>
+{/exp:rss:feed}

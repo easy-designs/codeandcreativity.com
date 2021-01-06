@@ -1,0 +1,83 @@
+{exp:rss:feed 
+	channel="talks"
+	show_future_entries="no"
+	parse="inward"
+	}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:media="http://search.yahoo.com/mrss/"
+	>
+	<channel>
+		<title>Code &amp; Creativity</title>
+		<atom:link href="http://{site_domain}/feeds/audio/" rel="self" type="application/rss+xml"/>
+		<link>http://{site_domain}/feeds/audio/</link>
+		<language>en-us</language>
+	{exp:channel:entries
+		channel="microcopy"
+		dynamic="no"
+		url_title="copyright"
+		disable="categories|category_fields|member_data|pagination"
+		}
+		<copyright>{exp:xml_encode}{content_body}{/exp:xml_encode}</copyright>
+	{/exp:channel:entries}
+	{exp:channel:entries 
+		channel="microcopy"
+		dynamic="no"
+		url_title="about-the-series"
+		disable="categories|category_fields|member_data|pagination"
+		}
+		{preload_replace:rss_description="{exp:mah_eencode decode='yes'}{exp:tagstripper:stripAllTags}{content_body}{/exp:tagstripper:stripAllTags}{/exp:mah_eencode}"}
+		<itunes:subtitle>Sharing like it’s going out of style</itunes:subtitle>
+		<itunes:summary>{exp:xml_encode}{rss_description}{/exp:xml_encode}</itunes:summary>
+		<description>{exp:xml_encode}{rss_description}{/exp:xml_encode}</description>
+	{/exp:channel:entries}
+		<itunes:author>Code &amp; Creativity</itunes:author>
+		<itunes:owner>
+			<itunes:name>Code &amp; Creativity</itunes:name>
+			<itunes:email>contact@codeandcreativity.com</itunes:email>
+		</itunes:owner>
+		<itunes:image href="http://e.ed-cdn.com/images/podcast-logo.png" />
+		<itunes:category text="Technology"/>
+		<itunes:category text="Arts">
+			<itunes:category text="Design"/>
+		</itunes:category>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:block>no</itunes:block>
+	{exp:channel:entries
+		channel="talks"
+		dynamic="no"
+		cache="yes"
+		refresh="30"
+		show_expired="yes"
+		show_future_entries="no"
+		orderby="entry_date|local_or_visiting_speaker"
+		sort="desc|desc"
+		parse="inward"
+		disable="categories|category_fields|member_data|pagination"
+		}
+		{if talk_audio_mp3}
+		<item>
+			<title>{exp:xml_encode}{talk_speaker}: {title}{/exp:xml_encode}</title>
+			<itunes:author>{talk_speaker}</itunes:author>
+			<itunes:subtitle>{talk_event:event_start_time format="%F %j%S %Y"}</itunes:subtitle>
+			<itunes:summary><![CDATA[{exp:tagstripper:stripAllTags}{talk_description}{/exp:tagstripper:stripAllTags}]]></itunes:summary>
+			{talk_speaker_image}<itunes:image href="{cdn_domain}/speakers/_large/{file_name}" />{/talk_speaker_image}
+			<pubDate>{talk_event:event_start_time format="%D, %d %M %Y %H:%i:%s %O"}</pubDate>
+			{talk_audio_mp3}
+			<enclosure url="http://e.ed-cdn.com{path}{file_name}" length="{file_size}" type="audio/mpeg" />
+			<guid>{file_name}</guid>
+			<itunes:duration>{audio_file_mp3_duration}</itunes:duration>
+			{/talk_audio_mp3}
+		</item>
+		{/if}
+	{/exp:channel:entries}
+	</channel>
+</rss>
+{/exp:rss:feed}

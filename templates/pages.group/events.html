@@ -1,0 +1,107 @@
+{embed="inc/.document-start"
+	body_id="{segment_1}"
+	title="Our Talk Series"
+	}
+
+{exp:channel:entries
+	channel="pages"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	<h2 class="page-title">{title}</h2>
+	{content_body}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="events"
+	dynamic="no"
+	show_expired="yes"
+	show_future_entries="yes"
+	limit="4"
+	start_on="{current_time format='%Y-%m-%d %H:%i'}"
+	orderby="event_start_time"
+	sort="asc"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	{if count == 1}
+	<section id="upcoming" class="separated">
+		<h1 class="section-title">Upcoming Events</h1>
+		<ol class="events">
+			<li>
+			{embed="inc/.mini-promo"
+				type="event"
+				datetime="{event_start_time format='%Y%m%d'}"
+				display_date="{event_start_time format='%F %j%S'}"
+				display_date="{event_start_time format='%F %j%S'}"
+				display_month="{event_start_time format='%M'}"
+				display_day="{event_start_time format='%d'}"
+				display_year="{event_start_time format='%Y'}"
+				visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+				local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+				main_talk_title="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{title}{/event_talks}"
+				description="{event_description}"
+				status="{status}"
+				title="{ical_event_title}"
+				url="{page_url}"
+				{if '{event_start_time format="%Y%m%d%H%i%s"}' > '{current_time format="%Y%m%d%H%i%s"}'}
+				eventbrite_link="{eventbrite_link}"
+				{/if}
+				}
+			</li>
+	{if:else}
+		{embed="inc/.vevent"
+			datetime="{event_start_time format='%Y-%m-%d'}"
+			display_month="{event_start_time format='%M'}"
+			display_day="{event_start_time format='%d'}"
+			display_year="{event_start_time format='%Y'}"
+			status="{status}"
+			title="{ical_event_title}"
+			visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+			local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+			url="{page_url}"
+			}
+	{/if}
+	{if count == total_results}
+		</ol>
+	</section>
+	{/if}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="events"
+	dynamic="no"
+	stop_before="{current_time format='%Y-%m-%d %H:%i'}"
+	show_expired="yes"
+	show_future_entries="no"
+	orderby="event_start_time"
+	sort="desc"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	{if count == 1}
+	<section id="past" class="separated">
+		<h1 class="section-title">Past Events</h1>
+		<ul class="events">
+	{/if}
+	{embed="inc/.vevent"
+		datetime="{event_start_time format='%Y-%m-%d'}"
+		display_month="{event_start_time format='%M'}"
+		display_day="{event_start_time format='%d'}"
+		display_year="{event_start_time format='%Y'}"
+		visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+		local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+		url="{page_url}"
+		status="{status}"
+		title="{ical_event_title}"
+		}
+	{if count == total_results}
+		</ul>
+	</section>
+	{/if}
+{/exp:channel:entries}
+	
+{embed='inc/.document-end'}

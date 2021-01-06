@@ -1,0 +1,92 @@
+{exp:channel:entries
+	channel="workshops"
+	show_future_entries="yes"
+	show_expired="yes"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	
+	{embed="inc/.document-start"
+		title="{workshop_ical_title}"
+		body_id="workshop"
+		body_class="vevent{if '{event_start_time format="%Y%m%d"}' >= '{current_time format="%Y%m%d"}'} future{/if}"
+		}
+	
+	
+	<h1 class="summary promo-title"><span>
+		<b class="date">
+		{if '{event_start_time format="%Y%m%d"}' >= '{current_time format="%Y%m%d"}'}
+			Coming <time class="dtstart" datetime="{workshop_start_time format='%Y-%m-%d'}">{workshop_start_time format='%F %j%S'}</time>
+		{if:else}
+			<time class="dtstart" datetime="{workshop_start_time format='%Y-%m-%d'}">{workshop_start_time format='%F %j%S %Y'}</time>
+		{/if}
+		</b>
+
+		{exp:typogrify widont="n" caps="n"}
+		<b class="title">{title}</b>
+		<b class="with">with {workshop_presenters backspace="7"}<b class="speaker">{name}</b> &amp; {/workshop_presenters}</b>
+		{/exp:typogrify}
+	</span></h1>
+
+	{!-- only future events get the link --}
+	{if '{workshop_start_time format="%Y%m%d"}' >= '{current_time format="%Y%m%d"}'}
+	<p class="get-tickets"><a href="{workshop_eventbrite_link}">Buy your Ticket</a></p>
+	{/if}
+	
+	{exp:typogrify}
+		{workshop_description}
+	{/exp:typogrify}
+
+	{!-- only future events get the location --}
+	{if '{workshop_start_time format="%Y%m%d"}' >= '{current_time format="%Y%m%d"}'}
+		{workshop_venue}
+			{preload_replace:google_addy="{exp:low_replace find='SPACE' replace='+'}{workshop_venue:venue_address:street},{workshop_venue:venue_address:city},{workshop_venue:venue_address:region}{/exp:low_replace}"}
+
+	<article id="venue" class="separated">
+		<h1 class="section-title">The Venue</h1>
+		<div data-image="http://maps.googleapis.com/maps/api/staticmap?center={google_addy}&amp;zoom=15&amp;size=350x200&amp;maptype=roadmap&amp;markers={google_addy}&amp;sensor=true"
+			data-image-attr="width:350;height:200;"></div>
+		<p>This workshop will be held at</p>
+		<p class="vcard">
+			<b class="fn org"><a class="url" href="{event_venue:venue_url}">{workshop_venue:title}</a></b><br/>
+			<span class="adr">
+				<span class="street-address">{workshop_venue:venue_address:street}</span><br/>
+			{if workshop_venue:venue_address:street2}
+				<span class="extended-address">{workshop_venue:venue_address:street2}</span><br/>
+			{/if}
+				<span class="locality">{workshop_venue:venue_address:city}</span>,
+				<span class="region">{workshop_venue:venue_address:region}</span>
+				<span class="postal-code">{workshop_venue:venue_address:postal_code}</span>
+			</span><br/>
+			<a class="tel" href="tel:+1{exp:low_replace find='SPACE|-' replace='' multiple='yes'}
+				{workshop_venue:venue_phone}{/exp:low_replace}">{workshop_venue:venue_phone}</a>
+		</p>
+	</article>
+		{/workshop_venue}
+	{/if}
+
+	<article id="presenters" class="separated">
+		{workshop_presenters}
+		
+		{if row_count=="1"}
+		<h1 class="section-title">Your Guide{if total_rows != "1"}s{/if}</h1>
+		{/if}
+		
+		<div class="presenter vcard">
+			<div class="speaker photo"
+				data-image="{cdn_domain}/speakers/_thumb/{photo}{filename}.{extension}{/photo}"
+				data-image-attr="width:150;height:150;"></div>
+
+			<h2 class="speaker fn">{name}</h2>
+		
+			{exp:typogrify widont="n"}
+				{biography}
+			{/exp:typogrify}
+		</div>
+		{/workshop_presenters}
+	</article>
+	
+{/exp:channel:entries}
+
+{embed='inc/.document-end'}

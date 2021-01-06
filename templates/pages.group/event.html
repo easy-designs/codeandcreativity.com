@@ -1,0 +1,138 @@
+{exp:channel:entries
+	channel="events"
+	show_future_entries="yes"
+	show_expired="yes"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	
+	{embed="inc/.document-start"
+		title="{ical_event_title}"
+		}
+	
+	
+	{embed="inc/.event-promo"
+		event_page="yes"
+		datetime="{event_start_time format='%Y%m%d'}"
+		title="{ical_event_title}"
+		{if '{event_start_time format="%Y%m%d%H%i%s"}' > '{current_time format="%Y%m%d%H%i%s"}'}
+		display_date="{event_start_time format='%F %j%S'}"
+		{if:else}
+		display_date="{event_start_time format='%d %F'}"
+		{/if}
+		display_year="{event_start_time format='%Y'}"
+		visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+		local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+		description="{event_description}"
+		url="{page_url}"
+		{if '{event_start_time format="%Y%m%d%H%i%s"}' > '{current_time format="%Y%m%d%H%i%s"}'}
+		eventbrite_link="{eventbrite_link}"
+		{/if}
+		}
+	
+	{if '{event_start_time format="%Y%m%d"}' >= '{current_time format="%Y%m%d"}'}
+		{event_venue}
+			{preload_replace:google_addy="{exp:low_replace find='SPACE' replace='+'}{event_venue:venue_address:street},{event_venue:venue_address:city},{event_venue:venue_address:region}{/exp:low_replace}"}
+	<div id="venue" class="separated">
+		<h1 class="section-title">The Venue</h1>
+		
+		<div data-image="http://maps.googleapis.com/maps/api/staticmap?center={google_addy}&amp;zoom=15&amp;size=350x200&amp;maptype=roadmap&amp;markers={google_addy}&amp;sensor=true"
+			data-image-attr="width:350;height:200;"></div>
+		<p>This event will be held at</p>
+		<p class="vcard">
+			<b class="fn org"><a class="url" href="{event_venue:venue_url}">{event_venue:title}</a></b><br/>
+			<span class="adr">
+				<span class="street-address">{event_venue:venue_address:street}</span><br/>
+			{if event_venue:venue_address:street2}
+				<span class="extended-address">{event_venue:venue_address:street2}</span><br/>
+			{/if}
+				<span class="locality">{event_venue:venue_address:city}</span>,
+				<span class="region">{event_venue:venue_address:region}</span>
+				<span class="postal-code">{event_venue:venue_address:postal_code}</span>
+			</span><br/>
+			<a class="tel" href="tel:+1{exp:low_replace find='SPACE|-' replace='' multiple='yes'}
+				{event_venue:venue_phone}{/exp:low_replace}">{event_venue:venue_phone}</a>
+		</p>
+	</div>
+		{/event_venue}
+	{/if}
+	
+	{event_talks
+		orderby='local_or_visiting_speaker'
+		sort='desc'
+		}
+		
+		{if "{exp:phpstringfun function='substr_count' par1='TBD'}{title}{/exp:phpstringfun}" != "1"}
+		
+	<article class="talk separated {exp:stringy:lowercase}{local_or_visiting_speaker}{/exp:stringy:lowercase}">
+		
+		{if talk_speaker != "Unused"}
+			<h1 class="section-title">{title}</h1>
+		{/if}
+		
+		{exp:typogrify}
+			{talk_description}
+		{/exp:typogrify}
+		
+		{if talk_video_embed}
+			{exp:antenna
+				url="{talk_video_embed}"
+				cache_minutes="120"
+				wmode="transparent|opaque|window"
+				}
+		<div class="video">
+			<h2>Watch the presentation</h2>
+			{if embed_code}
+			<div class="video-wrapper">
+				{embed_code}
+			</div>
+			{/if}
+			<p class="source"><a href="{talk_video_embed}">View it on Vimeo</a></p>
+		</div>
+			{/exp:antenna}
+		{/if}
+		
+		{if talk_slides_url}
+		<div class="slides">
+			<h2>View the slides</h2>
+			<div class="slides-wrapper {talk_slides_aspect_ratio}">
+				<iframe src="{talk_slides_url}" frameborder="0" title="{talk_speaker}: {title}" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+			</div>
+			<p class="source"><a href="{talk_slides_url}">View full size</a></p>
+		</div>
+		{/if}
+		
+		{if talk_audio_mp3 AND talk_audio_ogg}
+		<div class="audio">
+			<h2>Listen to the talk</h2>
+			<audio controls="">
+				<source src="{cdn_domain}{talk_audio_ogg}" type="audio/ogg"/>
+				<source src="{cdn_domain}{talk_audio_mp3}" type="audio/mpeg"/>
+				<ul>
+					<li><a href="{cdn_domain}{talk_audio_ogg}">Ogg Vorbis</a></li>
+					<li><a href="{cdn_domain}{talk_audio_mp3}">MP3</a></li>
+				</ul>
+			</audio>
+		</div>
+		{/if}
+		
+		{if talk_speaker != "Unused"}
+		<div class="vcard">
+			<div class="speaker photo"
+				data-image="{cdn_domain}/speakers/_thumb/{talk_speaker_image}{filename}{/talk_speaker_image}.jpg"
+				data-image-attr="width:150;height:150;"></div>
+			<h2 class="speaker fn">{talk_speaker}</h2>
+			{exp:typogrify widont="n"}
+				{talk_speaker_biography}
+			{/exp:typogrify}
+		</div>
+		{/if}
+	</article>
+	
+		{/if}
+	{/event_talks}
+	
+{/exp:channel:entries}
+
+{embed='inc/.document-end'}

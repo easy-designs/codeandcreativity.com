@@ -1,0 +1,58 @@
+<li class="vevent">
+{if embed:status=="open"}
+	{if embed:visiting_speaker != embed:local_speaker}
+		<a href="{embed:url}">
+	{/if}
+		<time class="dtstart" datetime="{embed:datetime}">
+			<b class="month">{embed:display_month}</b>
+			<b class="day">{embed:display_day}</b>
+			<b class="year">{embed:display_year}</b>
+		</time>
+	{if embed:speakers}
+		<b class="summary">
+			<b class="title">{embed:title}</b>
+			<b class="with">with {embed:speakers}</b>
+		</b>
+	{if:elseif embed:visiting_speaker != embed:local_speaker}
+		<b class="summary">
+			<b class="speaker visiting">{embed:visiting_speaker}</b>
+			{if embed:local_speaker}
+				&amp;
+				<b class="speaker local">{embed:local_speaker}</b>
+			{/if}
+		</b>
+	{if:else}
+		<b class="summary">
+			<b class="title">{embed:title}</b>
+		</b>
+	{/if}
+	{if embed:visiting_speaker != embed:local_speaker}
+		</a>
+	{/if}
+{if:else}
+		<time class="dtstart" datetime="{embed:datetime}">
+			<b class="month">{embed:display_month}</b>
+			<b class="day">{embed:display_day}</b>
+			<b class="year">{embed:display_year}</b>
+		</time>
+	{!-- workshop --}
+	{if embed:speakers}
+		<b class="summary">
+			<b class="title">{embed:title}</b>
+			<b class="with">with {embed:speakers}</b>
+		</b>
+	{if:elseif embed:visiting_speaker != embed:local_speaker}
+		<b class="summary">
+			<b class="speaker visiting">{embed:visiting_speaker}</b>
+			{if embed:local_speaker}
+				&amp;
+				<b class="speaker local">{embed:local_speaker}</b>
+			{/if}			
+		</b>
+	{if:else}
+		<b class="summary">
+			<b class="title">{embed:title}</b>
+		</b>
+	{/if}
+{/if}
+</li>

@@ -1,0 +1,61 @@
+{exp:channel:entries 
+	channel="pages"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	
+	{embed="inc/.document-start"
+		title="{title}"
+		}
+	
+	{exp:typogrify}
+		<h2 class="page-title">{title}</h2>
+		{content_body}
+	{/exp:typogrify}
+
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="staff"
+	dynamic="no"
+	orderby="start_date"
+	sort="asc"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	{if count == 1}
+	<section id="staff">
+		<h1>Made Possible by these Generous Folks</h1>
+		<ul>
+	{/if}
+			<li class="vcard">
+				<div class="photo"
+					data-image="{cdn_domain}{staff_photo}"
+					data-image-attr="width:220;height:220;"></div>
+				<b class="fn">{title}</b>
+				<b class="role">{staff_role}</b>
+				<a class="url" href="http://twitter.com/{staff_twitter}">@{staff_twitter}</a>
+			</li>
+	{if count == total_results}
+		</ul>
+	</section>
+	{/if}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	entry_id="779"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	<section id="colophon">
+	{exp:typogrify}
+		<h1>{title}</h1>
+		{content_body}
+	{/exp:typogrify}
+	</section>
+{/exp:channel:entries}
+
+{embed="inc/.document-end"}

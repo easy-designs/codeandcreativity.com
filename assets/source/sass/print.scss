@@ -1,0 +1,339 @@
+// ==========================================================================
+// Print Styles
+// These styles are applied to smartphones through narrow tablets
+// ==========================================================================
+
+// global prefs
+@import "base";
+
+
+// Page Setup
+// ==========================================================================
+@page {
+	margin: .75in;
+}
+body {
+	color: $color-black;
+	font-size: 14pt;
+}
+h1 {
+	font-size: 24pt;
+	margin:0;
+	.event-promo & {
+		text-align: center;
+	}
+	.date {
+		font-family: 'Honey Script Light', script; 
+	}
+}
+.page-title, 
+#elevator-pitch h1, 
+#elevator-pitch h2, 
+footer h1, 
+.talk .talk-title, 
+#staff h1 {
+	@extend %scripty;
+	font-size: 36pt;
+}
+h2 {
+	font-size: 18pt;
+}
+#logo {
+	margin:.25em 0;
+	object {
+		display: none;
+	}
+	a:before {
+		content:url("#{$cdn_domain}/css/i/logo-text-wide-b&w.png");
+		display: block;
+		height: 100px;
+		text-align: center;
+	}
+}
+
+
+.page-title {
+	@include adjust-font-size-to( 64px );
+}
+a:link,
+a:visited {
+	color:$color-black;
+	text-decoration: none;
+}
+
+a:after {
+	display: inline;
+	content: " (" attr(href) ")";
+	font-size:.8em;
+	#logo &,
+	.event-promo h1 &,
+	#elevator-pitch h1 & {
+		display: none;
+	}
+	#homepage &,
+	#elevator-pitch &,
+	.events & {
+		content: " (http://codeandcreativity.com" attr(href) ")";
+	}
+	#homepage #sponsors & {
+		content:" ("attr(href)")";
+	}
+	.events & {
+		display: block;
+	}
+	#elevator-pitch & {
+		font-size: .5em;
+	}
+	#sponsors & {
+		display: block;
+		text-align: center;
+	}
+}
+.get-tickets a {
+	font-weight: bold;
+}
+
+#elevator-pitch h2,
+#elevator-pitch .social,
+.slides,
+a.tel:after,
+.video-wrapper,
+.audio  {
+	display: none;
+}
+
+/* Homepage Event Promotion */
+.event-promo {
+	padding-top:330px;
+	position: relative;
+}
+.event-promo.imaged [data-imaged].visiting {
+	width: 300px;
+	height: 300px;
+	left: 50%;
+	margin-left: -150px;
+	top: 0;
+	position: absolute;
+	z-index:1;
+	img {
+		border:15px solid #ccc;
+		@include border-radius(50%);
+		max-width: 100%;
+	}
+}
+.event-promo.imaged [data-imaged].local {
+	margin-top: -.5em;
+	width: 150px;
+	height: 150px;
+	left: 50%;
+	margin-left: 90px;
+	top: 150px;
+	position: absolute;
+	z-index:2;
+	img {
+		border:15px solid #ccc;
+		@include border-radius(50%);
+		max-width: 100%;
+	}
+}
+.event-promo .date {
+	font-size: 24pt;
+}
+.event-promo h1 .speaker {
+	font-size: 24pt;
+}
+.event-promo h1 .date {
+	font-weight: normal;
+	line-height: 1.5;
+}
+.event-promo .visiting,
+.event-promo .amp,
+.event-promo .local {
+	display: inline;
+}
+.event-promo .date,
+.events time {
+	display: block;
+}
+
+.visiting::after {
+	display: none !important;
+}
+
+/* Individual Event Page */
+.venue {
+	overflow: hidden;
+}
+.venue div[data-image] img{
+	float: right;
+}
+.venue div + p {
+	margin-top:0;
+}
+.venue div + p:after {
+	content: " :";
+}
+.venue .vcard {
+	margin-left:1em;
+}
+.talk {
+	margin-top: 2.25em;
+}
+.talk .vcard img {
+	@include border-radius(50%);
+	@include box-sizing(border-box);
+	border:15px solid #eee;
+	float: right;
+	height: 150px;
+	margin: 0 0 1em 1em;
+	width:150px;
+}
+
+/* Footer */
+footer h1 .tools {
+	display: none;
+}
+#copyright {
+	font-size: 12pt;
+	text-align: center;
+}
+
+/* Footer Events Listings */
+#upcoming-events {
+	float: left;
+	margin-right: 4%;
+	width:48%;
+}
+#past-events {
+	float: right;
+	width: 48%;
+}
+#upcoming-events h1,
+#past-events h1,
+#sponsors h1 {
+	border-bottom: 1pt solid;
+	margin-bottom: 6pt;
+	text-align: center;
+}
+#upcoming-events,
+#past-events {
+	page-break-inside: avoid;
+}
+.events {
+	@include delist;
+	li {
+		margin: 0 0 1em;
+	}
+}
+.events time {
+	font-size: 10pt;
+}
+.events .vevent .visiting,
+.events .vevent .local,
+.events .vevent .placeholder {
+	font-size: 12pt;
+}
+
+
+/* Sponsors */
+#sponsors {
+	clear: both;
+	margin: 2.25em 0 1em;
+	overflow: hidden;
+	ul {
+		@include delist;
+	}
+	li {
+		float: left;
+		text-align: center;
+		width: 48%;
+		&:first-child {
+			margin-right:4%;
+		}
+	}
+	object {
+		display: none;
+	}
+	a:before {
+		height: 50px;
+		margin: 0 auto;
+		width:61px;
+	}
+	a[href*="easy-designs"]:before {
+		content:url("#{$cdn_domain}/sponsors/easy-designs-b&w.png");
+	}
+	a[href*="tubatomic"]:before {
+		content:url("#{$cdn_domain}/sponsors/tubatomic-b&w.png");
+		width: 50px;
+	}
+}
+.talk:before {
+	content:url("#{$cdn_domain}/css/i/stars-b&w.png");
+	display: block;
+	margin:0 auto;
+	width: 41px;
+}
+
+/* About Us Section */
+#elevator-pitch {
+	margin:2.25em 0;
+	h1::before,
+	h1::after {
+		content: url("#{$cdn_domain}/css/i/star-b&w.png");
+		margin: 0 .25em;
+	}
+}
+
+/* About Page */
+#staff {
+	h1 {
+		margin-bottom: .5em;
+	}
+	ul {
+		@include delist;
+		margin:0 auto;
+		b {
+			display: block;
+		}
+	}
+	li {
+		display: inline;
+		float: left;
+		margin-bottom: 2em;
+		margin-left:1.33%;
+		text-align: center;
+		width: 24%;
+		&:first-child {
+			margin-left: 0;
+		}
+		img {
+			@include border-radius(50%);
+			@include box-sizing(border-box);
+			border:15px solid #eee;
+			max-width: 100%;
+		}
+	}
+	.url:after {
+		display: none;
+	}
+}
+
+/* Contact Page */
+fieldset {
+	border: 0;
+	ol {
+		@include delist;
+	}
+	li {
+		margin-bottom: .5em;
+	}
+	label {
+		display: block;
+	}
+	input, textarea {
+		width:50%;
+	}
+	textarea {
+		height: 8em;
+	}
+}

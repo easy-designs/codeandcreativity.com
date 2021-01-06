@@ -1,0 +1,62 @@
+<article class="mini-promo vevent{if embed:eventbrite_link} future{/if}">
+	<h1 class="promo-title{if embed:home==''}__compact{/if}"><span>
+	
+{if structure:page:url != embed:url AND embed:visiting_speaker != embed:local_speaker}
+	<a href="{embed:url}">
+{/if}
+	
+{if embed:home}
+		<b class="date">
+	{if embed:type=="workshop"}
+			Workshop
+	{if:else}
+			Coming 
+	{/if}
+			<time class="dtstart" datetime="{embed:datetime}">{embed:display_date}</time>
+		</b>
+{if:else}
+		<time class="dtstart" datetime="{embed:datetime}">
+			<b class="month">{embed:display_month}</b>
+			<b class="day">{embed:display_day}</b>
+			<b class="year">{embed:display_year}</b>
+		</time>
+{/if}
+	
+{exp:typogrify widont="n" caps="n"}
+	{if embed:speakers}
+		<b class="title">{embed:title}</b>
+		<b class="with">with {embed:speakers}</b>
+	{if:elseif embed:visiting_speaker == embed:local_speaker}
+		<b class="title">{embed:title}</b>
+	{if:else}
+		<b class="speaker visiting">{embed:visiting_speaker}</b>
+		{!--if embed:local_speaker != "TBA"--}
+		&amp; <b class="speaker local">{embed:local_speaker}</b>
+		{!--/if--}
+	{/if}
+{/exp:typogrify}
+	
+{if structure:page:url != embed:url AND embed:visiting_speaker != embed:local_speaker}
+	</a>
+{/if}
+
+	</span></h1>
+
+	<div class="summary">
+	{exp:typogrify}
+		{embed:description}
+	{/exp:typogrify}
+
+	{!-- Link should not appear if we have no descriptions --}
+	{if structure:page:url != embed:url AND embed:visiting_speaker != embed:local_speaker}
+		{if "{exp:phpstringfun function='substr_count' par1='TBA'}{embed:main_talk_title}{/exp:phpstringfun}" != "1"}
+			<p>{if embed:eventbrite_link}Want more? {/if}<a href="{embed:url}">Read the full {embed:type} description…</a></p>
+		{/if}
+	{/if}
+	
+	{!-- only future events get the link --}
+	{if embed:eventbrite_link}
+		<p class="get-tickets"><a href="{embed:eventbrite_link}">{if embed:type=="workshop"}Buy your Ticket{if:else}Save Your Seat{/if}</a></p>
+	{/if}
+	</div>
+</article>

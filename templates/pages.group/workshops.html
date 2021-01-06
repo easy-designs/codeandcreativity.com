@@ -1,0 +1,100 @@
+{embed="inc/.document-start"
+	body_id="{segment_1}"
+	title="Our Workshop Series"
+	}
+
+{exp:channel:entries
+	channel="pages"
+	disable="categories|category_fields|member_data|pagination"
+	}
+	<h2 class="page-title">{title}</h2>
+	{content_body}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="workshops"
+	dynamic="no"
+	show_expired="no"
+	show_future_entries="yes"
+	limit="4"
+	status="open|closed"
+	sort="asc"
+	disable="categories|category_fields|member_data|pagination"
+	}
+	{if count == 1}
+	<section id="upcoming" class="separated">
+		<h1 class="section-title">Upcoming Workshops</h1>
+		<ol class="events">
+			<li>
+			{embed="inc/.mini-promo"
+				type="workshop"
+				datetime="{workshop_start_time format='%Y-%m-%d'}"
+				display_date="{workshop_start_time format='%F %j%S'}"
+				display_month="{workshop_start_time format='%M'}"
+				display_day="{workshop_start_time format='%d'}"
+				display_year="{workshop_start_time format='%Y'}"
+				starts_at="{workshop_start_time format='%H:%i%a'}"
+				ends_at="{workshop_end_time format='%H:%i%a'}"
+				speakers='{workshop_presenters backspace="7"}<b class="speaker">{name}</b> &amp; {/workshop_presenters}'
+				url="{page_url}"
+				status="{status}"
+				title="{title}"
+				description="{workshop_teaser}"
+				url_title="{url_title}"
+				{if '{workshop_start_time format="%Y%m%d%H%i%s"}' > '{current_time format="%Y%m%d%H%i%s"}'}
+				eventbrite_link="{workshop_eventbrite_link}"
+				{/if}
+				}
+			</li>
+	{if:else}
+		{embed="inc/.workshop"
+			datetime="{workshop_start_time format='%Y-%m-%d'}"
+			display_month="{workshop_start_time format='%M'}"
+			display_day="{workshop_start_time format='%d'}"
+			display_year="{workshop_start_time format='%Y'}"
+			starts_at="{workshop_start_time format='%H:%i%a'}"
+			ends_at="{workshop_end_time format='%H:%i%a'}"
+			speakers='{workshop_presenters backspace="7"}<b class="speaker">{name}</b> &amp; {/workshop_presenters}'
+			url="{page_url}"
+			status="{status}"
+			title="{title}"
+			}
+	{/if}
+	{if count == total_results}
+		</ol>
+	</section>
+	{/if}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="workshops"
+	dynamic="no"
+	show_expired="yes"
+	show_future_entries="no"
+	sort="desc"
+	disable="categories|category_fields|member_data|pagination"
+	}
+	{if count == 1}
+	<section id="past" class="separated">
+		<h1 class="section-title">Past Workshops</h1>
+		<ul class="events">
+	{/if}
+	{embed="inc/.workshop"
+		datetime="{workshop_start_time format='%Y-%m-%d'}"
+		display_month="{workshop_start_time format='%M'}"
+		display_day="{workshop_start_time format='%d'}"
+		display_year="{workshop_start_time format='%Y'}"
+		starts_at="{workshop_start_time format='%H:%i%a'}"
+		ends_at="{workshop_end_time format='%H:%i%a'}"
+		speakers='{workshop_presenters backspace="11"}<b class="speaker">{name}</b> &amp; {/workshop_presenters}'
+		url="{page_url}"
+		status="{status}"
+		title="{title}"
+		}
+	{if count == total_results}
+		</ul>
+	</section>
+	{/if}
+{/exp:channel:entries}
+	
+{embed='inc/.document-end'}

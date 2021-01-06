@@ -1,0 +1,64 @@
+// Font Stacks
+@mixin font-museo( $font-size: null, $line-height: null )
+{
+	@if ($font-size != null) and ($line-height != null)
+	{
+		font: 300 #{$font-size}/#{$line-height} "museo", serif;
+	}
+	@else
+	{
+		font-style: normal;
+		font-weight: 300;
+		font-family: "museo", serif;
+	}
+}
+@font-face {
+    font-family: 'Honey Script Light';
+    src: url("#{$cdn_domain}/fonts/honeyscript-light-webfont.eot");
+    src: url("#{$cdn_domain}/fonts/honeyscript-light-webfont.eot?#iefix") format("embedded-opentype"),
+         url("#{$cdn_domain}/fonts/honeyscript-light-webfont.woff") format("woff"),
+         url("#{$cdn_domain}/fonts/honeyscript-light-webfont.ttf") format("truetype"),
+         url("#{$cdn_domain}/fonts/honeyscript-light-webfont.svg#honey_scriptlight") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+@mixin font-smoothing {
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+@mixin ligatures {
+	-webkit-font-feature-settings: "liga";
+	-moz-font-feature-settings: "liga=1";
+	-moz-font-feature-settings: "liga";
+	-ms-font-feature-settings: "liga" 1;
+	-o-font-feature-settings: "liga";
+	font-feature-settings: "liga";
+}
+
+/* Typography */
+// ========================================================================== */
+body {
+	@include font-museo( 120%, 1.5 );
+	@include font-smoothing;
+	letter-spacing: .07em;
+	@include respond-min($break-3) {
+		font-size: 100%;
+	}
+}
+h2 {
+	@include adjust-font-size-to( 20px, 1 );
+	@include padding-trailer(.5);
+}
+%scripty {
+	font-family: "Honey Script Light", script;
+	font-weight: normal;
+	text-align: center;
+}
+.page-title {
+	@extend %scripty;
+	margin: 0 auto;
+	padding: 0;
+}

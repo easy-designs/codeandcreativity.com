@@ -1,0 +1,248 @@
+/* Mixin: delist
+ * Removes list formatting
+ */
+@mixin delist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Mixin: element-invisible
+ * Hides content in an accessible way
+ * See http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+@mixin element-invisible {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  @if $legacy-support-for-ie6 or $legacy-support-for-ie7 {
+    clip: rect(1px 1px 1px 1px); // IE6 and IE7 use the wrong syntax.
+  }
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+
+/* Mixin: Hardware Accelerate
+ * Turns on hardware acceleration for the element
+ */
+@mixin hardware-accelerate {
+	@include transform( translate3d(0,0,0) );
+}
+
+/* Mixin: Rotated Text 
+ * See https://gist.github.com/chriseppstein/8615d6dc847e10c72fe5
+ */
+@mixin rotated-text(
+	$num-letters: 100,
+	$angle-span: 180deg,
+	$angle-offset: 0deg,
+	$class-prefix: "char"
+) {
+	$angle-per-char: $angle-span / $num-letters;
+	@for $i from 0 through $num-letters {
+	    .#{$class-prefix}#{$i} {
+			@include transform( rotate($angle-offset + $angle-per-char * $i) );
+		}
+	}
+}
+
+/* Mixin: overflow-hide
+ * Pushes text out of an element to hide it
+ */
+@mixin overflow-hide( $display: block ) {
+	display: $display;
+	text-indent: 100%;
+	overflow: hidden;
+}
+
+/* Mixin: Easy Lozenge
+ * Makes the Easy lozenge shape in CSS
+ * Based on http://css-tricks.com/examples/ShapesOfCSS/#tv
+ */
+@mixin easy-lozenge(
+	$background: green,
+	$foreground: white,
+	$width: 200px,
+	$height: 150px,
+	$clip: true,
+	$padding: 0
+) {
+	position: relative;
+	width: $width;
+	height: $height;
+	margin: 0;
+	padding: $padding;
+	background: $background;
+	border-radius: 50% / 10%;
+	color: $foreground;
+	text-align: center;
+	text-indent: .1em;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 10%;
+		bottom: 10%;
+		right: -5%;
+		left: -5%;
+		background: inherit;
+		border-radius: 5% / 50%;
+	}
+	* {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+/* Mixin: Show Breakpoint
+ * Inserts breakpoint info at the start of the body
+ */
+@mixin show-breakpoints( $breakpoints ) {
+	&::before {
+		background: #fff;
+		border: 1px solid;
+		color: #f90;
+		content:"break-0";
+		font-size: 2em;
+		padding: 1em;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 6000;
+		@each $break in $breakpoints {
+			@include respond-min( $break ) {
+				content: "#{$break}";
+			}
+		}
+	}
+}
+
+/* Mixin: Return After
+ * Forces a carriage return after the element
+ */
+@mixin return-after {
+	&::after {
+		content: "\00A0";
+		display: block;
+		width: 0;
+		height: 0;
+		margin-bottom: -1px;
+	}
+}
+
+/* Mixin: Calendar Icon
+ * Creates a calendar icon based on the markup pattern
+ * 	.dtstart
+ * 		.month
+ * 		.day
+ * 		.year
+ */
+@mixin calendar-icon (
+	$background-color: #fff,
+	$foreground-color: #000,
+	$border-color: #000,
+	$shadow-color: #000,
+	$top-color: #f00,
+	$ring-color: #ccc,
+	$display-year: false
+){
+	.dtstart {
+		@include box-shadow( 1px 1px 3px $shadow-color );
+		background-color: $background-color;
+		border: 1px solid $border-color;
+		position: absolute;
+		.month,
+		.day {
+			display: block;
+			font-weight: bold;
+			line-height: 1;
+			text-align: center;
+		}
+		.month {
+			border-top: 1em solid $top-color;
+			font-size: .6em;
+			letter-spacing: .2em;
+			padding: .55em 1em 0;
+			text-transform: uppercase;
+		}
+		.day {
+			font-size: 1.2em;
+			line-height: .9;
+			padding: 0 0 .25em;
+		}
+		@if $display-year == false {
+			.year {
+				display: block;
+				position: absolute;
+				left: -999em;
+			}
+		}
+		&::before,
+		&::after {
+			@include border-radius(2px); 
+			border: 1px solid $ring-color;
+			border-right-color: lighten( $ring-color, 10% );
+			border-bottom-color: lighten( $ring-color, 10% );
+			content: "\00A0";
+			display: block;
+			width: 0;
+			height: .5em;
+			position: absolute;
+			top: -.3em;
+		}
+		&::before {
+			left: .65em;
+		}
+		&::after {
+			right: .65em;
+		}
+	}
+}
+
+// ==========================================================================
+// Media Query Management
+// ==========================================================================
+$fix-mqs: false !default;
+/* Mixin: respond-min
+ * Adds a min-width Media Query or unwraps the content in IE
+ * 
+ * @param $width - the width to set it at
+ */
+@mixin respond-min($width) {
+	@if $fix-mqs {
+		@if $fix-mqs >= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media only screen and (min-width: $width) {
+			@content;
+		}
+	}
+}
+/* Mixin: respond-max
+ * Adds a max-width Media Query
+ * 
+ * @param $width - the width to set it at
+ */
+@mixin respond-max($width) {
+	@if $fix-mqs {
+		@if $fix-mqs <= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media only screen and (max-width: $width) {
+			@content;
+		}
+	}
+}
+/* Mixin: old-ie
+ * Allows older IE versions to be targeted
+ */
+$old-ie: false !default;
+@mixin old-ie {
+	@if $old-ie {
+		@content;
+	}
+}

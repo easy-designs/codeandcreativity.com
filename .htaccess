@@ -1,0 +1,34 @@
+# Setup
+Options +FollowSymlinks
+RewriteEngine on
+RewriteBase /
+
+<FilesMatch "^.*\.(gz\.(css|js)|svgz)$">
+  Header set Content-Encoding "gzip"
+</FilesMatch>
+
+<FilesMatch ".(eot|ttf|otf|woff)">
+  Header set Access-Control-Allow-Origin *
+</FilesMatch>
+
+AddType application/x-font-ttf           ttc ttf
+AddType application/x-font-otf           otf
+AddType application/font-woff            woff
+AddType application/font-woff2           woff2
+AddType application/vnd.ms-fontobject    eot
+
+# rewrite css, img & js
+RewriteRule ^(css|fonts|js|audio|speakers|sponsors|images|gzip)\/(.*) /assets/$1/$2 [L]
+
+# rewrite old URLs
+#RewriteRule ^events\/2014-02-25\/? /events/4/ [L]
+#RewriteRule ^events\/2013-12-03\/? /events/3/ [L]
+#RewriteRule ^events\/2013-10-01\/? /events/2/ [L]
+#RewriteRule ^events\/2013-08-27\/? /events/1/ [L]
+
+# feeds
+RewriteRule ^feeds\/(.*)\.(rss|ics)$ /feeds/$1 [L]
+
+# rewrite out the index.php page
+RewriteCond $1 !^(assets|__ee_admin|themes|favicon\.ico|robots\.txt|index\.php|index\.html) [NC]
+RewriteRule ^(.*)$ index.php/$1 [L]

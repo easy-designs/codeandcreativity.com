@@ -1,0 +1,63 @@
+{preload_replace:css_ext="{exp:easy_gzip_alternatives normal='css' gzip='{gzip_ext}css'}"}
+
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<title>{if embed:title != ""}{embed:title}{if:else}{structure:page:title}{/if}{if "{embed:title}" != "Code &amp; Creativity"} | {site_name}{/if}</title>
+	<link rel="shortcut icon" href="{cdn_domain}/images/favicon.ico" type="image/vnd.microsoft.icon">
+
+	{!-- Grunticons --}
+	<script>
+		/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.createElementNS||!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||window.opera&&-1===navigator.userAgent.indexOf("Chrome")),o=function(o){var r=t.document.createElement("link"),a=t.document.getElementsByTagName("script")[0];r.rel="stylesheet",r.href=e[o&&n?0:o?1:2],a.parentNode.insertBefore(r,a)},r=new t.Image;r.onerror=function(){o(!1)},r.onload=function(){o(1===r.width&&1===r.height)},r.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
+		grunticon(["{cdn_domain}/css/icons/svg.{css_ext}", "{cdn_domain}/css/icons/png.{css_ext}", "{cdn_domain}/css/iconsfallback.{css_ext}"]);
+	</script>
+	<noscript><link href="{cdn_domain}/css/icons/fallback.{css_ext}" rel="stylesheet"></noscript>
+
+	<!--  CSS files -->
+	<!--[if (lte IE 8)&(!IEMobile)]>
+    <link rel="stylesheet" href="{cdn_domain}/css/main-old-ie.{css_ext}" media="screen">
+	<![endif]-->
+	<!--[if gt IE 8]><!-->
+	<link rel="stylesheet" href="{cdn_domain}/css/main.{css_ext}" media="screen">
+	<!--<![endif]-->
+	<!--[if IEMobile 7]>
+		<link rel="stylesheet" href="{cdn_domain}/css/main.{css_ext}" media="screen">
+		<link rel="stylesheet" href="{cdn_domain}/css/windows7.{css_ext}" media="screen">
+	<![endif]-->
+	<link rel="stylesheet" href="{cdn_domain}/css/print.{css_ext}" media="print">
+	
+	<!-- HTML5 for <= IE8 -->
+	<!--[if lte IE 8]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<!-- Typekit -->
+	<script type="text/javascript" src="//use.typekit.net/nnw0lvk.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	
+	<!-- Mobile -->
+	<meta name="viewport" content="width=device-width,initial-scale=1"/>
+	<meta name="MobileOptimized" content="width">
+	<meta name="HandheldFriendly" content="true">
+	<meta http-equiv="cleartype" content="on">
+
+	<!-- OpenGraph, etc. -->
+	<meta property="og:title" content="{if embed:title != ""}{embed:title}{if:else}{structure:page:title}{/if}" />
+    <meta property="og:type" content="website" />
+	<meta property="og:url" content="{structure:page:url}" />
+	<meta property="og:site_name" content="Code &amp; Creativity" />
+	<meta property="og:image" content="{cdn_domain}/images/podcast-logo.png" />
+	<meta property="og:locale" content="en_US" />
+	{exp:channel:entries 
+		channel="microcopy"
+		dynamic="no"
+		url_title="about-the-series"
+		disable="categories|category_fields|member_data|pagination"
+		cache="yes"
+		refresh="10080"
+		}
+	<meta property="og:description" content="{exp:tagstripper:stripAllTags}{content_body}{/exp:tagstripper:stripAllTags}" />
+	{/exp:channel:entries}
+	<meta name="medium" content="website" />
+	
+</head>

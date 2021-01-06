@@ -1,0 +1,196 @@
+{preload_replace:svg_ext="{exp:easy_gzip_alternatives normal='svg' gzip='svgz'}"}
+
+</main>
+
+{if segment_1 != "about"}
+	{exp:channel:entries 
+		channel="microcopy"
+		dynamic="no"
+		url_title="about-the-series"
+		disable="categories|category_fields|member_data|pagination"
+		cache="yes"
+		refresh="10080"
+		}
+<article id="elevator-pitch">
+	<div class="container">
+		<h1><a href="/about">{title}</a></h1>
+		{content_body}
+		<ul class="social">
+			<li><a class="icon icon-twitter" href="//twitter.com/CodeNCreativity"
+				title="Follow us on Twitter for event updates, related reading, and more">Twitter</a></li>
+			<li><a class="icon icon-facebook" href="//www.facebook.com/CodeAndCreativity"
+				title="Like us on Facebook for event updates, related reading, and more">Facebook</a></li>
+			<li><a class="icon icon-googleplus" href="//plus.google.com/+Codeandcreativity"
+				title="Follow us on Google Plus for event updates, related reading, and more">GooglePlus</b></a></li>
+			<li><a class="icon icon-vimeo" href="//vimeo.com/codeandcreativity/"
+				title="Watch talks from our events on Vimeo">Vimeo</a></li>
+			<li><a class="icon icon-instagram" href="//statigr.am/viewer.php#/tag/codeandcreativity/"
+				title="View photos tagged #codeandcreativity on Instagram">Instagram</a></li>
+			<li><a class="icon icon-lanyrd" href="//lanyrd.com/series/codeandcreativity/"
+				title="Follow this series on Lanyrd">Lanyrd</a></li>
+		</ul>
+		<h2>Have some thoughts to share with us? <a href="/contact">Contact us</a></h2>
+	</div>
+</article>
+	{/exp:channel:entries}
+{/if}
+
+<footer role="contentinfo">
+	<div class="container">
+{if segment_1 == "events" AND segment_2 == ""}
+
+		{!-- Should we put something else here? --}
+
+{if:else}
+		<aside id="upcoming-events">
+			<h1>Plan Ahead
+				<span class="tools">
+					<a href="webcal://{site_domain}/feeds/events.ics" class="icon icon-calendar" 
+						title="Subscribe to upcoming events calendar in iCal format"><b>Subscribe to the </b>Calendar<b> Feed</b></a>
+				</span>
+			</h1>
+	{exp:channel:entries
+		channel="events|workshops"
+		dynamic="no"
+		show_expired="no"
+		show_future_entries="yes"
+		status="open|closed"
+		limit="3"
+		disable="categories|category_fields|member_data|pagination"
+		cache="yes"
+		refresh="10080"
+		start_on="{current_time format='%Y-%m-%d %H:%i'}"
+		orderby="event_start_time"
+		sort="asc"
+		}
+		{if no_results}
+			<p>There are no upcoming events scheduled.</p>
+		{/if}
+		{if count == 1}
+			<ul class="events">
+		{/if}
+		{!-- workshops --}
+		{if channel_id=="34"}
+			{embed="inc/.vevent"
+				datetime="{workshop_start_time format='%Y-%m-%d'}"
+				display_month="{workshop_start_time format='%M'}"
+				display_day="{workshop_start_time format='%d'}"
+				display_year="{workshop_start_time format='%Y'}"
+				status="{status}"
+				title="{title}"
+				speakers='{workshop_presenters backspace="7"}<b class="speaker">{name}</b> &amp; {/workshop_presenters}'
+				url="{page_url}"
+				}
+		{if:else}
+			{embed="inc/.vevent"
+				datetime="{event_start_time format='%Y-%m-%d'}"
+				display_month="{event_start_time format='%M'}"
+				display_day="{event_start_time format='%d'}"
+				display_year="{event_start_time format='%Y'}"
+				status="{status}"
+				title="{ical_event_title}"
+				visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+				local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+				url="{page_url}"
+				}
+		{/if}
+		{if count == total_results}
+			</ul>
+		{/if}
+	{/exp:channel:entries}
+		</aside>
+
+		<aside id="past-events">
+			<h1>Catch Up 
+				<span class="tools">
+					<a href="//{site_domain}/feeds/audio/" class="icon icon-audio" 
+						title="Subscribe to past events as an audio podcast"><b>Subscribe to the </b>Audio<b> Podcast</b></a>
+					<a href="//vimeo.com/codeandcreativity/videos/rss" class="icon icon-video"
+						title="Subscribe to past events as a video podcast"><b>Subscribe to the </b>Video<b> Podcast</b></a>
+				</span>
+			</h1>
+	{exp:channel:entries
+		channel="events"
+		dynamic="no"
+		show_expired="yes"
+		show_future_entries="no"
+		sort="desc"
+		limit="4"
+		disable="categories|category_fields|member_data|pagination"
+		cache="yes"
+		refresh="10080"
+		}
+		{if no_results}
+			<p>There are no past events.</p>
+		{/if}
+		{if count == 1}
+			<ul class="events">
+		{/if}
+		{if count != 4}
+				{embed="inc/.vevent"
+					datetime="{event_start_time format='%Y-%m-%d'}"
+					display_month="{event_start_time format='%M'}"
+					display_day="{event_start_time format='%d'}"
+					display_year="{event_start_time format='%Y'}"
+					status="{status}"
+					visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+					local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+					url="{page_url}"
+					}
+		{/if}
+		{if count == 4}
+				<li class="more"><a href="/events/" class="more-link">View More</a></li>
+		{/if}
+		{if count == total_results}
+			</ul>
+		{/if}
+	{/exp:channel:entries}
+		</aside>
+{/if}
+
+{exp:channel:entries
+	channel="sponsors"
+	dynamic="no"
+	orderby="sponsor_level|title"
+	sort="asc|asc"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	{if count == 1}
+		<aside id="sponsors">
+			<h1>Generous Supporters</h1>
+			<ul>
+	{/if}
+				<li><a href="{sponsor_url}">
+	{if sponsor_svg}
+		{exp:low_replace find=".svg" replace=".{svg_ext}"}
+					<object data="{cdn_domain}{sponsor_svg}" type="image/svg+xml">
+		{/exp:low_replace}
+	{/if}
+						<img src="{cdn_domain}{sponsor_logo}" alt="{title}" 
+							{sponsor_logo}width="{width}" height="{height}"{/sponsor_logo} 
+							title="{title} is {if sponsor_responsibilities}the {sponsor_responsibilities}{if:else}a {sponsor_level}{/if}">
+	{if sponsor_svg}
+					</object>
+	{/if}
+				</a></li>
+	{if count == total_results}
+			</ul>
+		</aside>
+	{/if}
+{/exp:channel:entries}
+
+{exp:channel:entries
+	channel="microcopy"
+	dynamic="no"
+	url_title="copyright"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	<div id="copyright">
+		{exp:low_replace find='svg' replace='{svg_ext}'}{content_body}{/exp:low_replace}
+	</div>
+{/exp:channel:entries}
+</footer>

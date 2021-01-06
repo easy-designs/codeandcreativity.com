@@ -1,0 +1,1004 @@
+@import "base";
+@import "normalize";
+
+$display-grid: false;
+
+body {
+	background: $color-background; //lighten( $color-yellow, 20% );
+	background: lighten( $color-grey, 5% );
+	color: $color-foreground;
+	margin: 0;
+	min-width: 240px;
+}
+
+/* MQ Watchers */
+// ========================================================================== */
+#getActiveMQ-watcher {
+	font-family: "break-0";
+	@include respond-min($break-1) {
+		font-family: "break-1";
+	}
+	@include respond-min($break-2) {
+		font-family: "break-2";
+	}
+	@include respond-min($break-3) {
+		font-family: "break-3";
+	}
+	@include respond-min($break-3) {
+		font-family: "break-4";
+	}
+}
+
+object[data*="svg"] {
+	pointer-events: none;
+}
+
+/* Element Definitions
+// ========================================================================== */
+%scripty {
+	color: $color-blue-mid;
+}
+a {
+	@include transition( color .5s );
+	border-bottom: 1px dotted $color-grey-dark;
+	color: $color-orange;
+	text-decoration: none;
+	&:hover,
+	&:focus {
+		color: $color-orange-dark;
+	}
+}
+b {
+	font-weight: normal;
+}
+ol li,
+ul li {
+	margin-bottom: 0;
+}
+hr {
+	@include leader;
+	@include padding-leader(1);
+	@include trailer(0);
+	background: url("#{$cdn_domain}/css/i/stars.png") top center no-repeat;
+	border: 0;
+	clear: both;
+}
+[data-imaged] {
+	display: none;
+	@include respond-min( $break-3 ){
+		@include border-radius( 50% );
+		@include box-sizing( border-box );
+		background: $color-blue-mid;
+		border: $promo-border;
+		display: block;
+		margin: 0;
+		overflow: hidden;
+		max-width: 100%;
+		height: auto;
+		&.speaker img {
+			@include border-radius(50%);
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+}
+.video-wrapper,
+.slides-wrapper {
+	position: relative;
+	padding-top: 56.25%; // 16:9
+	width: 100%;
+	height: 0;
+	iframe {
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		top: 0;
+	}
+}
+.slides-wrapper {
+	padding-bottom: 38px; // controls
+}
+.slides-wrapper.three-by-two {
+	padding-top: 66%; // 3:2
+}
+.slides-wrapper.four-by-three {
+	padding-top: 75%; // 4:3
+}
+
+
+/* Interface
+// ========================================================================== */
+%riser {
+	@include transition( transform .25s, background-color .25s, box-shadow .25s, text-shadow .25s );
+	&:hover,
+	&:focus {
+		@include box-shadow( 2px 2px 1px $color-shadow );
+		@include transform( translate( -2px, -2px ) );
+		@include transform( translate3d( -2px, -2px, 0 ) );
+	}
+	&:active {
+		@include box-shadow( none );
+		@include transform( translate( 0, 0 ) );
+		@include transform( translate3d( 0, 0, 0 ) );
+		@include transition( none );
+	}
+}
+%button {
+	@extend %riser;
+	@include border-radius( 5px );
+	background-color: $color-orange;
+	border: 0;
+	color: $color-white;
+	&:hover,
+	&:focus {
+		background-color: $color-orange-dark;
+	}
+}
+.get-tickets {
+	margin: 1em 0 0;
+	text-align: center;
+	a {
+		@extend %button;
+		@include adjust-font-size-to( 22px, 1 );
+		@include border-radius( 1em );
+		@include inline-block;
+		padding: .25em 1em;
+	}
+}
+
+/* Photos
+// ========================================================================== */
+[data-imaged].speaker {
+	float: right;
+	margin: 1em 0 1em 1em;
+	width: 180px;
+	height: 180px;
+}
+
+
+/* Layout
+// ========================================================================== */
+$container-style: fluid;
+// default
+.container {
+	@include container;
+	margin: 0 auto;
+	max-width: $break-3;
+	position: relative;
+	@include layout( $grid-0 ) {
+		@include set-container-width;
+		@if $display-grid == true {
+			@include susy-grid-background;
+		}
+	}
+	& > div,
+	& > aside {
+		margin-bottom: 1.25em;
+	}
+}
+@include respond-min( $break-1 ){
+	@include layout( $grid-1 ) {
+		.container {
+			@include set-container-width;
+			@if $display-grid == true {
+				@include susy-grid-background;
+			}
+		}
+	}
+}
+@include respond-min( $break-2 ){
+	@include layout( $grid-2 ) {
+		.container {
+			@include set-container-width;
+			@if $display-grid == true {
+				@include susy-grid-background;
+			}
+		}
+	}
+}
+@include respond-min( $break-3 ){
+	@include layout( $grid-3 ) {
+		.container {
+			@include set-container-width;
+			@if $display-grid == true {
+				@include susy-grid-background;
+			}
+		}
+		#upcoming-events {
+			@include span-columns( floor( $grid-3 / 2 ) );
+			width: space( floor( $grid-3 / 2 ) );
+		}
+		#past-events {
+			@include span-columns( floor( $grid-3 / 2 ) omega );
+			width: space( floor( $grid-3 / 2 ) );
+		}
+		#sponsors,
+		#copyright {
+			@include box-sizing( border-box );
+			clear: both;
+			margin: 1.5em auto 0;
+			overflow: hidden;
+		}
+	}
+}
+
+
+/* Icons
+// ========================================================================== */
+.icon {
+	@extend %riser;
+	@include ligatures;
+	@include font-smoothing;
+	b {
+		@include element-invisible;
+	}
+}
+
+
+/* Titles
+// ========================================================================== */
+.promo-title {
+	@include adjust-font-size-to( 22px, 1 );
+	color: $color-blue-mid;
+	text-align: center;
+	a {
+		border-width: 0;
+		color: $color-blue-mid;
+		color: inherit;
+	}
+	.amp {
+		display: block;
+	}
+	.speaker,
+	.title {
+		@include adjust-font-size-to( 28px, 1 );
+	}
+	.title {
+		line-height: 1;
+	}
+	.date {
+		color: $color-orange;
+		display: block;
+		font-family: 'Honey Script Light', script;
+		font-size: 2em;
+		line-height: 1;
+	}
+	.with {
+		@include adjust-font-size-to( 20px );
+		display: block;
+		line-height: 1;
+		margin-top: .25em;
+		.speaker {
+			font-size: 1em;
+		}
+		.amp {
+			display: inline;
+		}
+	}
+	@include respond-min( $break-3 ) {
+		@include layout( $grid-3 ) {
+			.amp {
+				display: inline;
+			}
+		}
+	}
+}
+.promo-title__compact {
+	@extend .promo-title;
+	text-align: left;
+	a {
+		border-bottom-width: 1px;
+		color: $color-orange;
+		&:hover,
+		&:focus {
+			color: $color-orange-dark;
+		}
+	}
+	.dtstart {
+		@include adjust-font-size-to( 14px, 1, 22px );
+	}
+	.date .dtstart {
+		@include adjust-font-size-to( 32px, 1, 22px );
+	}
+	.visiting,
+	.title {
+		@include adjust-leading-to( .75 );
+	}
+	.with,
+	.amp,
+	.speaker.local {
+		@include adjust-font-size-to( 20px, 1, 22px );
+	}
+	@include respond-min( $break-3 ) {
+		@include layout( $grid-3 ) {
+			.events .vevent & .dtstart {
+				@include adjust-font-size-to( 14px, 1, 22px );
+			}
+		}
+	}
+}
+.page-title {
+	@include border-radius( 0 0 .5em .5em );
+	@include box-shadow( 2px 2px 0 0 $color-grey-dark );
+	background: $color-white;
+	font-size: 2em;
+	max-width: px-to-ems( 350px, 38px );
+	@include respond-min( $break-3 ) {
+		@include layout( $grid-3 ) {
+			@include adjust-font-size-to( 64px );
+			@include box-shadow( none );
+			background: transparent;
+			width: auto;
+		}
+	}
+}
+.section-title {
+	@extend %scripty;
+	@include adjust-font-size-to( 42px, 2 );
+	@include respond-min($break-2) {
+		@include adjust-font-size-to( 48px, 2 );	
+	}
+	margin: 0 auto;
+}
+h2.fn,
+.talk h2.fn {
+	@include trailer(-.5);
+	padding-bottom: .25em;
+}
+
+ 
+/* Sections
+// ========================================================================== */
+// header
+header {
+	background: $color-blue-mid;
+	@include respond-min( $break-3 )
+	{
+		background: transparent;
+		overflow: visible;
+	}
+	@media (max-width:38.6875em) {
+		.container {
+			max-height: 96px;
+		}
+	}
+}
+#logo {
+	font-size: 3em;
+	margin: 0;
+	padding: .25em 0 .1em;
+	object {
+		display: block;
+		margin: 0 auto;
+		width: 300px;
+		height: percentage( 193 / 300 );
+		max-width: 100%;
+	}
+	object img {
+		@extend object;
+		height: auto;
+	}
+	@include respond-min( $break-3 )
+	{
+		width: 300px;
+		margin: 15px auto;
+		position: relative;
+		right: 10px;
+		#homepage & {
+			margin: 0;
+			margin-right: 68px;
+			position: absolute;
+			top: 15px;
+			right: 50%;
+			z-index: 2;
+		}
+		a {
+			background: transparent url("#{$cdn_domain}/css/i/logo.png") center center no-repeat;
+			background-image: url("#{$cdn_domain}/css/i/logo.svg"), none;
+			background-size: contain;
+			border: 0;
+			display: block;
+			padding-top: 66.67%; // this is the height as a rough % of the width
+		}
+		object {
+			display: none;
+		}
+	}
+}
+// Promos
+.event-promo,
+.mini-promo {
+	@include hardware-accelerate;
+	margin: 2em 0;
+	&:first-child {
+		margin-top: 0;
+	}
+}
+.event-promo {
+	@include respond-min( $break-3 ) {
+		@include layout( $grid-3 ) {
+			&.imaged {
+				background: url("#{$cdn_domain}/css/i/promo-background.png") center 13% no-repeat;
+				background-image: url("#{$cdn_domain}/css/i/promo-background.svg"),none;
+				position: relative;
+				padding-top: px-to-ems( 480px );
+				[data-imaged] {
+					background: $color-blue-mid;
+					border: $promo-border;
+					border-width: gutter(1);
+					width: columns( $grid-0 );
+					position: absolute;
+					z-index: 1;
+					&.visiting {
+						float: none;
+						margin: 0 0 0 -200px;
+						width: 400px;
+						height: 400px;
+						left: 50%;
+						top: 75px;
+					}
+					&.local {
+						float: none;
+						margin: -.5em 0 0 90px;
+						width: 200px;
+						height: 200px;
+						left: 50%;
+						top: 250px;
+					}
+				}
+				
+			}
+			.summary {
+				margin: 1em auto 1em;
+			}
+			&.future .summary {
+				padding-top: 3em;
+				position: relative;
+			}
+			.get-tickets {
+				margin: 0;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 2;
+			}
+		}
+	}
+}
+// Separated
+.separated {
+	@include leader;
+	@include padding-leader(1.5);
+	clear: both;
+	background: url("#{$cdn_domain}/css/i/stars.png") top center no-repeat;
+	@include respond-min( $break-3 ) {
+		@include leader(1.5);
+		@include padding-leader(2);
+	}
+}
+// about
+#elevator-pitch {
+	@include padding-leader(.5);
+	@include padding-trailer(.5);
+	background: $color-blue-light;
+	color: $color-white;
+	@include respond-min( $break-3 ) {
+		@include leader;
+	}
+	h1,
+	h2 {
+		@extend %scripty;
+		font-size: px-to-ems( 44px );
+		line-height: 1;
+		a {
+			border: 0;
+		}
+	}
+	@include respond-min( $break-2 ) {
+		h1::before,
+		h1::after {
+			content: url("#{$cdn_domain}/css/i/star.png");
+			content: url("#{$cdn_domain}/css/i/star.svg");
+			margin: 0 .25em;
+		}
+	}
+	h2 {
+		@include padding-trailer(0);
+		font-size: 2em;
+	}
+	ul.social {
+		@include delist;
+		@include hardware-accelerate;
+		@include leader(-.15);
+		@include trailer(.75);
+		font-size: 1.75em;
+		//letter-spacing: .2em;
+		text-align: center;
+		li {
+ 			display: inline;
+		}
+	}
+	h1 a {
+		color:$color-white;
+	}
+	.social a {
+		color: $color-blue-logo;
+		@include border-radius(5px);
+		@include inline-block;
+		margin: .2em .3em;
+		&.icon {
+			border: 0;
+			color: $color-white;
+			&:hover,
+			&:focus {
+				@include box-shadow( 2px 2px 1px $color-shadow-dark );
+			}
+		}
+	}
+	h2 a {
+		border-bottom: 1px dotted $color-white;
+		color: $color-white;
+	}
+}
+.social .icon {
+	background-size: contain;
+	display: block;
+	height: 1em;
+	overflow: hidden;
+	text-indent:-9999px;
+	width:1em;
+}
+
+// footer
+footer {
+	@include text-shadow( 2px 2px 0 $color-shadow-dark );
+	background: $color-blue-logo;
+	color: $color-white;
+	a {
+		color: $color-orange-light;
+		&:focus,
+		&:hover {
+			color: $color-white;
+		}
+	}
+	.container > aside {
+		padding-top: 1.5em;
+		margin: 0;
+	}
+	h1 {
+		@extend %scripty;
+		@include adjust-font-size-to( 44px );
+		@include leader(.35);
+		@include trailing-border;
+		border-color: $color-border;
+		border-color: rgba( $color-border, .3 );
+		border-width: 1px;
+		color: $color-white;
+		padding: 0;
+		text-align: center;
+		.tools {
+			@include adjust-font-size-to( 20px, 1, 44px );
+			display: block;
+			margin: 0 0 .5em -.5em;
+			a {
+				@extend %button;
+				@extend %riser;
+				@include hardware-accelerate;
+				@include inline-block;
+				@include text-shadow( none );
+				background-size: contain;
+				margin: 0 0 0 .25em;
+				height: 1.7em;
+				overflow: hidden;
+				text-indent: -9999px;
+				width: 2.1em;
+				&:hover,
+				&:focus {
+					@include box-shadow( 2px 2px 1px darken($color-shadow-dark,10%) );
+				}
+			}
+		}
+		@include respond-min( $break-1 ) {
+			position: relative;
+			text-align: left;
+			.tools {
+				margin: 0;
+				position: absolute;
+				right:0;
+				top: .25em;
+			}
+		}
+	}
+	.placeholder {
+		color: $color-white;
+	}
+}
+.events {
+	@include delist;
+	margin-top: -.4em;
+	.section-title + & {
+		@include leader;
+	}
+	.vevent,
+	.more {
+		@include hardware-accelerate;
+		color: $color-white;
+		color: inherit;
+		margin-bottom: 1.5em;
+		.dtstart {
+			@include box-sizing( border-box );
+			@include text-shadow( none );
+			color: $color-background;
+			display: block;
+		}
+		.summary .visiting,
+		.summary .title {
+			@include adjust-font-size-to( 21px, 1 );
+			line-height: 1.2;
+		}
+		.visiting {
+			@include return-after;
+			&::after {
+				margin-top: -1px;
+			}
+		}
+		a .visiting::after {
+			margin-top: -1px;
+		}
+		.with {
+			display: block;
+		}
+		@include respond-min( $break-1 ) {
+			@include layout( $grid-1 ) {
+				@include calendar-icon( $color-background, $color-foreground, $color-border, $color-shadow-dark, $color-orange );
+				min-height: 3em;
+				padding-left: space(1);
+				position: relative;
+				.dtstart {
+					color: $color-foreground;
+					width: columns( 1 );
+					text-align: center;
+					top: 5px;
+					right: space( $grid-1 - 1 );
+					.month,
+					.day {
+						padding-left: px-to-ems( 3px );
+						padding-right: 0;
+					}
+				}
+			}
+		}
+		@include respond-max( $break-2 ) {
+			.dtstart {
+				font-size: .7em;
+			}
+		}
+		@include respond-min( $break-2 ) {
+			@include layout( $grid-2 ) {
+				padding-left: space(1);
+				.dtstart {
+					width: columns( 1 );
+					right: space( $grid-2 - 1 );
+				}
+    			.summary {
+    			    position: relative;
+    			    top: 2px;
+    			}
+			}
+		}
+		@include respond-min( $break-3 ) {
+			@include layout( $grid-3 ) {
+				padding-left: space( 1 );
+				.dtstart {
+					font-size: .9em;
+					width: px-to-ems( 50px );
+					right: space( $grid-3 - 1 );
+				}
+			}
+			footer & {
+				@include layout( floor( $grid-3 / 2 ) ) {
+					padding-left: space( 1 );
+					.dtstart {
+						font-size: .9em;
+						width: px-to-ems( 50px );
+						right: space( floor( $grid-3 / 2 ) - 1 );
+					}
+				}
+			}
+		}
+	}
+	.more {
+		@include trailer(0);
+		min-height: 0;
+	}
+}
+#venue {
+	overflow: hidden;
+	margin: 2em 0;
+	h1 {
+		margin-top: 0;
+		text-align: center;
+	}
+	[data-imaged] {
+		@include border-radius( 30px );
+		float: right;
+		width: 350px;
+		height: 200px;
+		margin-top: 1em;
+	}
+	.vcard {
+		margin: 0 0 0 1em;
+		.fn {
+			font-weight: bold;
+		}
+	}
+}
+#presenters {
+	h1 {
+		margin-top: 0;
+		text-align: center;
+	}
+}
+.talk {
+	audio {
+		width: 100%;
+	}
+	.talk-title {
+		@extend %scripty;
+		@include adjust-font-size-to( 42px, 2 );
+		@include respond-min($break-2) {
+			@include adjust-font-size-to( 48px, 2 );	
+		}
+		margin: 0 auto;
+	}
+	h2 {
+		@include trailer(0);
+	}
+	.video-wrapper + .source,
+	.slides-wrapper + .source {
+		margin: 0;
+		text-align: right;
+	}
+	@include respond-min( $break-3 ) {
+		.slides h2,
+		.audio h2 {
+			margin-top: 0;
+		}
+	}
+}
+@-moz-document url-prefix() {
+	.talk audio {
+		margin-top: -2em;
+	}
+}
+#staff {
+	margin: 0;
+	h1 {
+		@extend %scripty;
+		@include adjust-font-size-to( 48px, 2 );
+		margin: 0 auto .5em;
+	}
+	ul {
+		@include delist;
+		@include trailer;
+		li {
+			@include trailer;
+			text-align: center;
+		}
+		b,
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+		b.fn {
+			font-weight: bold;
+		}
+		[data-imaged] {
+			margin-bottom: .75em;
+			width: 250px;
+			height: auto;
+			max-width: 100%; 
+			img {
+				display: block;
+			}
+		}
+		@include respond-min( $break-3 ){
+			@include layout( $grid-3 ) {
+				@include container;
+				@include set-container-width;
+				@if $display-grid == true {
+					@include susy-grid-background;
+				}
+				li:nth-child(odd) {
+					@include span-columns( floor( $grid-3 / 2 ) );
+				}
+				li:nth-child(even) {
+					@include span-columns( floor( $grid-3 / 2 ) omega );
+				}
+			}
+		}
+	}
+}
+#colophon {
+	@include padding-trailer;
+	h1 {
+		@extend %scripty;
+		@include adjust-font-size-to( 48px, 2 );
+		margin: 0 auto .5em;
+	}
+}
+#sponsors {
+	@include padding-leader( .5 );
+	@include padding-trailer( .5 );
+	@include leader(0);
+	@include trailer( .5 );
+	&:first-child {
+		margin-top: 0;
+	}
+	h1 {
+		@include adjust-leading-to( .75 );
+		@include leader(0);
+		@include trailing-border;
+		border-color: $color-border;
+		border-color: rgba( $color-border, .3 );
+		border-width: 1px;
+		font-family: 'Honey Script Light', script;
+		font-weight: normal;
+		font-size: px-to-ems( 44px );
+		padding: 0;
+		text-align: center;		
+	}
+	ul {
+		@include delist;
+		text-align: center;
+		li {
+			display: inline;
+			margin: 0 1em;
+			vertical-align: middle;
+			a {
+				border: 0;
+			}
+		}
+	}
+	a {
+		display: inline-block;
+	}
+	object {
+		height: 50px;
+		max-width:100%;
+		width:61px;
+	}
+	@include respond-min( $break-3 ) {
+		@include padding-leader( 1.5 );
+		@include padding-trailer( 1.5 );
+	}
+}
+#copyright {
+	@include padding-leader( .5 );
+	@include padding-trailer( .5 );
+	@include adjust-font-size-to( 12px, .75 );
+	color: $color-blue-light;
+	margin: 0;
+	aside + & {
+		@include leading-border;
+		border-color: $color-border;
+		border-color: rgba( $color-border, .3 );
+		border-width: 1px;
+	}
+	@include respond-min( $break-2 ) {
+		@include layout( $grid-2 ) {
+			padding-left: 88px; // width of the image
+			position: relative;
+			&::before {
+				content: url("#{$cdn_domain}/css/i/creative-commons.png");
+				content: url("#{$cdn_domain}/css/i/creative-commons.svg");
+				width: 88px;
+				height: 31px;
+				position: absolute;
+				left: 0;
+			}
+			p {
+				margin: 0;
+				padding-left: 1.5em;
+			}
+		}
+	}
+	@include respond-min( $break-3 ) {
+		@include padding-leader( 1.5 );
+		@include padding-trailer( 1.5 );
+	}
+}
+#credits {
+	@include adjust-font-size-to( 12px, .75 );
+}
+
+/* Forms
+// ========================================================================== */
+form {
+	margin: 0;
+	input,
+	select,
+	textarea {
+		@include box-sizing( border-box );
+		color: $color-black;
+		margin: 0 auto;
+		padding: .1em .25em;
+	}
+	select {
+		-webkit-appearance: menulist-button;
+	}
+}
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 1px 0;
+}
+legend {
+	font-weight: bold;
+}
+ol {
+	@include delist;
+}
+li {
+	@include trailer;
+}
+label {
+	@include box-sizing(border-box);
+	@include trailer(.15);
+	font-weight: bold;
+}
+label,
+input,
+textarea,
+select {
+	@include box-sizing( border-box );
+	display: block;
+	max-width: 100%;
+	width: 100%;
+}
+form input,
+form textarea {
+	border: 1px solid $color-blue-mid;
+	@include border-radius(5px);
+	padding:.5em;
+}
+button[type=submit] {
+	background-color: $color-orange;
+	@include box-sizing(border-box);
+	@include border-radius(5px);
+	border:0;
+	color: $color-white;
+	font-size: 125%;
+	padding: .25em .5em;
+	text-align: center;
+	width:100%;
+	&:hover {
+		background-color:$color-orange-dark;
+	}
+}
+textarea {
+	height: 8em;
+}
+.validation-error {
+	label {
+		color:$color-orange;
+		&:before {
+			content: "Please provide ";
+		}
+	}
+	input,
+	textarea {
+		border:1px solid $color-orange;
+	}
+}
+@include respond-min($break-3) {
+	button[type=submit] {
+		width: auto;
+	}
+	textarea {
+		height: 11em;
+	}
+}

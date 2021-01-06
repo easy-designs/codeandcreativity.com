@@ -1,0 +1,50 @@
+{embed="inc/.document-start"
+	title="Code &amp; Creativity"
+	}
+
+{exp:channel:entries 
+	channel="microcopy"
+	dynamic="no"
+	url_title="tagline"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	<h2 class="page-title" id="tagline">{title}</h2>
+{/exp:channel:entries}
+
+	<h1>Taking a Break</h1>
+	<p>We are taking a break from running this event series to spend some time with our son Oscar. We’ll be back at some point, but in the interim, please enjoy these presentations from our past events:</p>
+
+{exp:channel:entries
+	channel="events"
+	dynamic="no"
+	stop_before="{current_time format='%Y-%m-%d %H:%i'}"
+	show_expired="yes"
+	show_future_entries="no"
+	orderby="event_start_time"
+	sort="desc"
+	disable="categories|category_fields|member_data|pagination"
+	cache="yes"
+	refresh="10080"
+	}
+	{if count == 1}
+		<ul class="events">
+	{/if}
+	{embed="inc/.vevent"
+		datetime="{event_start_time format='%Y-%m-%d'}"
+		display_month="{event_start_time format='%M'}"
+		display_day="{event_start_time format='%d'}"
+		display_year="{event_start_time format='%Y'}"
+		visiting_speaker="{event_talks orderby='local_or_visiting_speaker' sort='desc' limit='1'}{talk_speaker}{/event_talks}"
+		local_speaker="{event_talks orderby='local_or_visiting_speaker' sort='asc' limit='1'}{talk_speaker}{/event_talks}"
+		url="{page_url}"
+		status="{status}"
+		title="{ical_event_title}"
+		}
+	{if count == total_results}
+		</ul>
+	{/if}
+{/exp:channel:entries}
+
+{embed='inc/.document-end'}

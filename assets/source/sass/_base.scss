@@ -1,0 +1,67 @@
+@import "susyone";
+@import "compass";
+@import "compass/css3";
+@import "normalize";
+
+/* CDN
+// ========================================================================== */
+$cdn_domain: "//e.ed-cdn.com";
+
+/* Viewport
+// ========================================================================== */
+@-webkit-viewport{width:device-width}
+@-moz-viewport{width:device-width}
+@-ms-viewport{width:device-width}
+@-o-viewport{width:device-width}
+@viewport{width:device-width}
+
+
+// Font Sizes
+$browser-default-font-size: 16px;
+
+/* Colors 
+// ========================================================================== */
+// Definitions
+$color-yellow: #f5ee32;
+$color-white: #fff;
+$color-black: #33393A;
+$color-blue-dark: #366766;
+$color-blue-mid: #2E8591;
+$color-blue-light: #6ABBB8;
+$color-blue-logo: #257281;
+$color-orange: #FF6C2C;
+$color-orange-light: #FA8A3A;
+$color-orange-dark: darken( $color-orange, 15% );
+$color-gold: #F3B824;
+$color-yellow: #E9ED79;
+$color-grey: #E4E8F1;
+$color-grey-dark: darken( $color-grey, 15% );
+// Functions
+$color-background: $color-white;
+$color-foreground: $color-black;
+$color-border: $color-grey;
+$color-shadow: darken( $color-grey, 15% );
+$color-shadow-dark: $color-blue-dark;
+
+/* Breakpoints
+// ========================================================================== */
+$grid-0: 3;
+$break-1: 20em; /* 320px */
+$grid-1: 6;
+$break-2: 30em; /* 480px */
+$grid-2: 8;
+$break-3: 38.75em; /* 620px */
+$grid-3: 9;
+
+/* Other Variables
+// ========================================================================== */
+$promo-border: 15px solid $color-blue-mid;
+
+/* Functions & Mixins
+// ========================================================================== */
+@import "functions";
+@import "mixins";
+
+/* Typography
+// ========================================================================== */
+@import "type";
