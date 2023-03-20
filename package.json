@@ -1,0 +1,20 @@
+{
+	"name": "Code & Creativity",
+	"description": "Code & Creativity was an event series that ran from 2013-2015 in Chattanooga, TN",
+	"version": "2.0.0",
+	"author": "Easy Designs (easy-designs.net)",
+	"private": true,
+	"devDependencies": {
+		"@11ty/eleventy": "^2.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/easy-designs/codeandcreativity.com.git"
+	},
+	"keywords": [],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/easy-designs/codeandcreativity.com/issues"
+	},
+	"homepage": "https://github.com/easy-designs/codeandcreativity.com#readme"
+}
