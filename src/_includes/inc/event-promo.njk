@@ -1,0 +1,15 @@
+<article class="event-promo vevent imaged">
+	<h1 class="promo-title"><span>
+		<b class="date"><time class="dtstart" datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></b>
+		<b class="title">{{ title }}</b>
+	</span></h1>
+
+	<div class="speaker visiting" data-image="/speakers/_large/{{ talks[0].photo }}" data-image-attr="width:370;height:370;"></div>
+	{% if talks[1] %}
+		<div class="speaker local" data-image="/speakers/_small/{{ talks[1].photo }}" data-image-attr="width:170;height:170;"></div>
+	{% endif %}
+
+	<div class="summary">
+		{{ description }}
+	</div>
+</article>

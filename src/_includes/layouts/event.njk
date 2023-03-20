@@ -1,0 +1,13 @@
+
+---
+is_post: true
+---
+{% extends "layouts/base.html" %}
+
+{% block content %}
+	{% include "inc/event-promo.njk" %}
+
+	{% for talk in talks %}
+		{% include "inc/presentation.njk" %}
+	{% endfor %}
+{% endblock %}

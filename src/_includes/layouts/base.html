@@ -1,0 +1,154 @@
+{% set pagetitle %}{% if title != "Code & Creativity" %}{{ title }} | {% endif %}Code & Creativity{% endset %}
+<!DOCTYPE html>
+<html id="codeandcreativity-com" lang="en" dir="ltr" class="no-js">
+	<head profile="http://www.w3.org/1999/xhtml/vocab">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<title>{{ pagetitle }}</title>
+		<link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon">
+
+		<script>
+			/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+			window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.createElementNS||!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||window.opera&&-1===navigator.userAgent.indexOf("Chrome")),o=function(o){var r=t.document.createElement("link"),a=t.document.getElementsByTagName("script")[0];r.rel="stylesheet",r.href=e[o&&n?0:o?1:2],a.parentNode.insertBefore(r,a)},r=new t.Image;r.onerror=function(){o(!1)},r.onload=function(){o(1===r.width&&1===r.height)},r.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
+			grunticon(["/css/icons/svg.css", "/css/icons/png.css", "/css/iconsfallback.css"]);
+		</script>
+		<noscript><link href="/css/icons/fallback.css" rel="stylesheet"></noscript>
+
+		<!--  CSS files -->
+		<!--[if (lte IE 8)&(!IEMobile)]>
+			<link rel="stylesheet" href="/css/main-old-ie.css" media="screen">
+		<![endif]-->
+		<!--[if gt IE 8]><!-->
+		<link rel="stylesheet" href="/css/main.css" media="screen">
+		<!--<![endif]-->
+		<!--[if IEMobile 7]>
+			<link rel="stylesheet" href="/css/main.css" media="screen">
+			<link rel="stylesheet" href="/css/windows7.css" media="screen">
+		<![endif]-->
+		<link rel="stylesheet" href="/css/print.css" media="print">
+		
+		<!-- HTML5 for <= IE8 -->
+		<!--[if lte IE 8]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+		<!-- Typekit -->
+		<script type="text/javascript" src="//use.typekit.net/nnw0lvk.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
+		<!-- Mobile -->
+		<meta name="viewport" content="width=device-width,initial-scale=1"/>
+		<meta name="MobileOptimized" content="width">
+		<meta name="HandheldFriendly" content="true">
+		<meta http-equiv="cleartype" content="on">
+
+		<!-- OpenGraph, etc. -->
+		<meta property="og:title" content="{{ pagetitle }}">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="{{ permalink }}">
+		<meta property="og:site_name" content="Code &amp; Creativity">
+		<meta property="og:image" content="/images/podcast-logo.png">
+		<meta property="og:locale" content="en_US">
+		{% if description %}
+			<meta property="og:description" content="{{ description }}">
+		{% endif %}
+		<meta name="medium" content="website">
+	</head>
+
+	<body{% if body_class %} class="{{ body_class }}"{% endif %}>
+
+		<header role="banner">
+			<div class="container">
+				<div id="logo"><a href="/">
+					<object type="image/svg+xml" data="/images/logo-text-wide.svg" title="Code &amp; Creativity">
+						<img src="/images/logo-wide-large.png" width="400" height="100" alt="Code &amp; Creativity">
+					</object>
+				</a></div>
+			</div>
+		</header>
+
+		<main role="main" class="container">
+			{% block content %}{% endblock %}
+		</main>
+
+		<article id="elevator-pitch">
+			<div class="container">
+				<h1><a href="/about">About the Series</a></h1>
+				<p>Code & Creativity is a social talk series created to connect us with each other and our larger community. Every other month, we’ll gather at the Camp House for a few hours to listen to one local and one visiting designer/developer as they share their passions, wisdom, and war stories. We'll ask questions, talk shop, and maybe even make some new friends. Of course no gathering would be complete without something yummy in your tummy, so snacks and a tasty beverage (coffee, soft drink, or beer) are on us!</p>
+				<h2>Because mom told you to share</h2>
+				<ul class="social">
+					<li><a class="icon icon-twitter" href="https://twitter.com/CodeNCreativity"
+						title="Follow us on Twitter for event updates, related reading, and more">Twitter</a></li>
+					<li><a class="icon icon-facebook" href="https://www.facebook.com/CodeAndCreativity"
+						title="Like us on Facebook for event updates, related reading, and more">Facebook</a></li>
+					<li><a class="icon icon-googleplus" href="https://plus.google.com/+Codeandcreativity"
+						title="Follow us on Google Plus for event updates, related reading, and more">GooglePlus</b></a></li>
+					<li><a class="icon icon-vimeo" href="https://vimeo.com/codeandcreativity/"
+						title="Watch talks from our events on Vimeo">Vimeo</a></li>
+					<li><a class="icon icon-instagram" href="https://statigr.am/viewer.php#/tag/codeandcreativity/"
+						title="View photos tagged #codeandcreativity on Instagram">Instagram</a></li>
+					<li><a class="icon icon-lanyrd" href="https://lanyrd.com/series/codeandcreativity/"
+						title="Follow this series on Lanyrd">Lanyrd</a></li>
+				</ul>
+				<h2>Have some thoughts to share with us? <a href="/contact">Contact us</a></h2>
+			</div>
+		</article>
+
+		<footer role="contentinfo">
+			<div class="container">
+				<aside id="sponsors">
+					<h1>Generous Supporters</h1>
+					<ul>
+					<li>
+						<a href="http://easy-designs.net/">
+							<object data="/sponsors/easy-designs.svg" type="image/svg+xml">
+								<img src="/sponsors/easy-designs.png" alt="Easy Designs" width="61" height="50" title="Easy Designs is the Series Organizer">
+							</object>
+						</a>
+					</li>
+					<li>
+						<a href="http://lamppostgroup.com/">
+							<object data="/sponsors/lamp-post-group.svg" type="image/svg+xml">
+								<img src="/sponsors/lamp-post-group.png" alt="Lamp Post Group" width="48" height="50" title="Lamp Post Group is a 4">
+							</object>
+						</a>
+					</li>
+					<li>
+						<a href="http://thecamphouse.com/">
+							<object data="/sponsors/camphouse.svg" type="image/svg+xml">
+								<img src="/sponsors/camphouse.png" alt="The Camp House" width="50" height="50" title="The Camp House is the Venue Sponsor">
+							</object>
+						</a>
+					</li>
+					<li>
+						<a href="http://www.tubatomic.com/">
+							<object data="/sponsors/tubatomic.svg" type="image/svg+xml">
+								<img src="/sponsors/tubatomic.png" alt="Tubatomic" width="50" height="50" title="Tubatomic is the Video Sponsor">
+							</object>
+						</a>
+					</li>
+				</ul>
+			</aside>
+
+			<div id="copyright">
+				<p>This content of this site is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US" rel="license">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+			</div>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+		<script src="/js/main.js" async></script> 
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-176472-12', 'codeandcreativity.com');
+			ga('send', 'pageview');
+		</script>
+		<noscript>
+			<img src="//nojsstats.appspot.com/UA-176472-12/codeandcreativity.com<?php
+				$referrer = urlencode( $_SERVER['HTTP_REFERER'] );
+				echo isset( $referrer ) ? "?r={$referrer}" : ''; ?>" alt=""/>
+		</noscript>
+	</body>
+</html>
