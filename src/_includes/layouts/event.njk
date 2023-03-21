@@ -5,9 +5,83 @@ is_post: true
 {% extends "layouts/base.html" %}
 
 {% block content %}
-	{% include "inc/event-promo.njk" %}
+	<article class="event-promo vevent imaged">
+		<h1 class="promo-title"><span>
+			<b class="date"><time class="dtstart" datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time></b>
+			<b class="speaker visiting">{{ talks[0].speaker }}</b>
+			{% if talks[1] %}
+				&amp;
+				<b class="speaker local">{{ talks[1].speaker }}</b>
+			{% endif %}
+		</span></h1>
+
+		<div class="speaker visiting" data-image="/speakers/_large/{{ talks[0].photo }}" data-image-attr="width:370;height:370;"></div>
+		{% if talks[1] %}
+			<div class="speaker local" data-image="/speakers/_small/{{ talks[1].photo }}" data-image-attr="width:170;height:170;"></div>
+		{% endif %}
+
+		<div class="summary">
+			{{ description | markdownify | safe }}
+		</div>
+	</article>
 
 	{% for talk in talks %}
-		{% include "inc/presentation.njk" %}
+		<article class="talk separated {{ talk.type }}">
+			<h1 class="section-title">{{ talk.title }}</h1>
+
+			{{ talk.description | markdownify | safe }}
+
+			{% if talk.video %}
+				<div class="video">
+					<h2>Watch the presentation</h2>
+					<div class="video-wrapper">
+						<iframe src="{{ talk.video | replace('https://vimeo.com/','https://player.vimeo.com/video/') }}"
+										width="640" height="360" frameborder="0"
+										allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+										></iframe>
+					</div>
+					<p class="source"><a href="{{ talk.video }}">View it on Vimeo</a></p>
+				</div>
+			{% endif %}
+				
+			{% if talk.slides %}
+				<div class="slides">
+					<h2>View the slides</h2>
+					<div class="slides-wrapper {% if talk.aspect_ratio %}slides-wrapper--{{ talk.aspect_ratio }}{% endif %}">
+						<iframe src="{{ talk.slides }}" frameborder="0"
+										title="{{ talk.speaker }}: {{ talk.title }}"
+										webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""
+										></iframe>
+					</div>
+					<p class="source"><a href="{{ talk.slides }}">View full size</a></p>
+				</div>
+			{% endif %}
+				
+			{% if talk.audio %}
+				<div class="audio">
+					<h2>Listen to the talk</h2>
+					<audio controls>
+						<source src="/audio/{{ talk.audio }}.ogg" type="audio/ogg"/>
+						<source src="/audio/{{ talk.audio }}.mp3" type="audio/mpeg"/>
+						<ul>
+							<li><a href="/audio/{{ talk.audio }}.ogg" download>Download Ogg Vorbis</a></li>
+							<li><a href="/audio/{{ talk.audio }}.mp3" download>Download MP3</a></li>
+						</ul>
+					</audio>
+				</div>
+			{% endif %}
+				
+			{% if talk.speaker != "Unused" %}
+				<div class="vcard">
+					<div class="speaker photo" data-imaged>
+						<img src="/speakers/_thumb/{{ talk.photo }}"
+								width="150" height="150"
+								alt="{{ talk.speaker }}">
+					</div>
+					<h2 class="speaker fn">{{ talk.speaker }}</h2>
+					{{ talk.bio | markdownify | safe }}
+				</div>
+			{% endif %}
+		</article>
 	{% endfor %}
 {% endblock %}

@@ -51,6 +51,18 @@ module.exports = function(eleventyConfig) {
 		return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
 	});
 
+	eleventyConfig.addFilter("getDay", (dateObj, format, zone) => {
+		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "dd");
+	});
+
+	eleventyConfig.addFilter("getMonth", (dateObj, format, zone) => {
+		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "LLL");
+	});
+
+	eleventyConfig.addFilter("getYear", (dateObj, format, zone) => {
+		return DateTime.fromJSDate(dateObj, { zone: zone || "utc" }).toFormat(format || "yyyy");
+	});
+
 	eleventyConfig.addFilter("markdownify", text => {
 		return markdownIt(markdown_options).render( text );
 	});
@@ -70,6 +82,12 @@ module.exports = function(eleventyConfig) {
 	// Return the smallest number argument
 	eleventyConfig.addFilter("min", (...numbers) => {
 		return Math.min.apply(null, numbers);
+	});
+
+	eleventyConfig.addCollection("events", collectionApi => {
+		return collectionApi
+						 .getFilteredByGlob("**/events/*.md")
+						 .reverse();
 	});
 
 	// Features to make your build faster (when you need them)

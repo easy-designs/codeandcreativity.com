@@ -1,0 +1,31 @@
+
+---
+---
+{% extends "layouts/base.html" %}
+
+{% block content %}
+	{{ content | safe }}
+
+	<article class="separated">
+		<ul class="events">
+			{% for event in collections.events %}
+				<li class="vevent">
+					<a href="/events/{{ event.date | htmlDateString }}/">
+						<time class="dtstart" datetime="{{ event.date | htmlDateString }}">
+							<b class="month">{{ event.date | getMonth }}</b>
+							<b class="day">{{ event.date | getDay }}</b>
+							<b class="year">{{ event.date | getYear }}</b>
+						</time>
+						<b class="summary">
+							<b class="speaker visiting">{{ event.data.talks[0].speaker }}</b>
+							{% if event.data.talks[1] %}
+								&
+								<b class="speaker local">{{ event.data.talks[1].speaker }}</b>
+							{% endif %}
+						</b>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</article>
+{% endblock %}
