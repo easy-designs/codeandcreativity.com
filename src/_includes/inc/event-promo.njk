@@ -10,6 +10,6 @@
 	{% endif %}
 
 	<div class="summary">
-		{{ description }}
+		{{ description | markdownify | safe }}
 	</div>
 </article>
