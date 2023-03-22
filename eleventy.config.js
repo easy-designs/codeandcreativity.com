@@ -13,6 +13,8 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
+const fs = require('fs');
+const mp3_duration = require('mp3-duration');
 
 module.exports = function(eleventyConfig) {
 	// Copy the contents of the `public` folder to the output folder
@@ -65,6 +67,20 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.addFilter("markdownify", text => {
 		return markdownIt(markdown_options).render( text );
+	});
+
+	eleventyConfig.addFilter("filesize", (file) => {
+		return fs.statSync(`static/audio/${file}.mp3`).size;
+	});
+
+	eleventyConfig.addAsyncFilter("duration", async (file) => {
+		let seconds = await mp3_duration(`static/audio/${file}.mp3`, (err, duration) => {
+			if (err) {
+				return console.log(err.message);
+			}
+			return duration;
+		});
+		return seconds;
 	});
 
 	// Get the first `n` elements of a collection.

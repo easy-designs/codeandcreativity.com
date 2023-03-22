@@ -1,0 +1,54 @@
+---
+permalink: "/feeds/audio.xml"
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+	xmlns:media="http://search.yahoo.com/mrss/"
+	>
+	<channel>
+		<title>Code &amp; Creativity</title>
+		<atom:link href="https://codeandcreativity.com/feeds/audio.xml" rel="self" type="application/rss+xml" />
+		<link>https://codeandcreativity.com/feeds/audio.xml</link>
+		<language>en-us</language>
+		<copyright>2013-2015</copyright>
+		<itunes:subtitle>Sharing like it’s going out of style</itunes:subtitle>
+		<itunes:summary>Code &amp; Creativity is a social talk series created to connect us with each other and our larger community. Every other month, we’ll gather at the Camp House for a few hours to listen to one local and one visiting designer/developer as they share their passions, wisdom, and war stories. We'll ask questions, talk shop, and maybe even make some new friends. Of course no gathering would be complete without something yummy in your tummy, so snacks and a tasty beverage (coffee, soft drink, or beer) are on us!</itunes:summary>
+		<description>Code &amp; Creativity is a social talk series created to connect us with each other and our larger community. Every other month, we’ll gather at the Camp House for a few hours to listen to one local and one visiting designer/developer as they share their passions, wisdom, and war stories. We'll ask questions, talk shop, and maybe even make some new friends. Of course no gathering would be complete without something yummy in your tummy, so snacks and a tasty beverage (coffee, soft drink, or beer) are on us!</description>
+		<itunes:author>Code &amp; Creativity</itunes:author>
+		<itunes:owner>
+			<itunes:name>Code &amp; Creativity</itunes:name>
+			<itunes:email>contact@codeandcreativity.com</itunes:email>
+		</itunes:owner>
+		<itunes:image href="https://codeandcreativity.com/images/podcast-logo.png" />
+		<itunes:category text="Technology"/>
+		<itunes:category text="Arts">
+			<itunes:category text="Design"/>
+		</itunes:category>
+		<itunes:explicit>no</itunes:explicit>
+		<itunes:block>no</itunes:block>
+{% for event in collections.events %}
+	{% for talk in event.data.talks %}
+		{% if talk.audio %}
+			<item>
+				<title>{{ talk.speaker }}: {{ talk.title }}</title>
+				<itunes:author>{{ talk.speaker }}</itunes:author>
+				<itunes:subtitle>{{ event.date | readableDate }}</itunes:subtitle>
+				<itunes:summary type="html"><![CDATA[{{ talk.description }}]]></itunes:summary>
+				<itunes:image href="https://codeandcreativity.com/speakers/_large/{{ talk.photo }}" />
+				<pubDate>{{ event.date }}</pubDate>
+				<enclosure url="https://codeandcreativity.com/audio/{{ talk.audio }}.mp3" length="{{ talk.audio | filesize }}" type="audio/mpeg" />
+				<guid>{{ talk.audio }}</guid>
+				<itunes:duration>{{ talk.audio | duration }}</itunes:duration>
+			</item>
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+	</channel>
+</rss>
