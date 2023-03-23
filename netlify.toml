@@ -1,0 +1,18 @@
+[build]
+	publish = "_site"
+	command = "npm run build"
+
+[[headers]]
+  for = "/*.svgz"
+  [headers.values]
+  Content-Encoding = "gzip"
+
+[[headers]]
+  for = "/*.gz.*"
+  [headers.values]
+  Content-Encoding = "gzip"
+
+[[redirects]]
+  from = "/events/"
+  to = "/"
+
