@@ -35,12 +35,12 @@ is_post: true
 				<div class="video">
 					<h2>Watch the presentation</h2>
 					<div class="video-wrapper">
-						<iframe src="{{ talk.video | replace('https://vimeo.com/','https://player.vimeo.com/video/') }}"
+						<iframe src="https://player.vimeo.com/video/{{ talk.video }}"
 										width="640" height="360" frameborder="0"
 										allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
 										></iframe>
 					</div>
-					<p class="source"><a href="{{ talk.video }}">View it on Vimeo</a></p>
+					<p class="source"><a href="https://vimeo.com/{{ talk.video | replace( r/([^?]+)\?.+/, '$1' ) }}">View it on Vimeo</a></p>
 				</div>
 			{% endif %}
 				
